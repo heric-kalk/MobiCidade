@@ -51,6 +51,6 @@ JavaFX, Open-Meteo API (https://open-meteo.com, pública e sem chave), `java.net
 **Requisito bônus (opcional, fora da contagem oficial):** gerar um mapa/relatório HTML estático das estações com maior movimento do dia, aberto automaticamente no navegador via `Desktop.getDesktop().browse()`.
 
 ## Integrantes do grupo com nome completo
-* Heric Costa do Nascimento - heric.costa@ufrpe.br
-* Kelvis Kauan de Souza Gomes - kelvis.kauan@ufrpe.br
-* Eduarda Menezes Guilherme - eduarda.guilherme@ufrpe.br
+* Heric Costa do Nascimento - [heric.costa@ufrpe.br](mailto:heric.costa@ufrpe.br)
+* Kelvis Kauan de Souza Gomes - [kelvis.kauan@ufrpe.br](mailto:kelvis.kauan@ufrpe.br)
+* Eduarda Menezes Guilherme - [eduarda.guilherme@ufrpe.br](mailto:eduarda.guilherme@ufrpe.br)
