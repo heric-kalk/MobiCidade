@@ -6,13 +6,17 @@ public class PrevisaoClimatica {
 
     private LocalDateTime ultimaConsulta;
     private String dados;
+    private double latitude;
+    private double longitude;
 
     public PrevisaoClimatica() {
     }
 
-    public PrevisaoClimatica(LocalDateTime ultimaConsulta, String dados) {
+    public PrevisaoClimatica(LocalDateTime ultimaConsulta, String dados, double latitude, double longitude) {
         this.ultimaConsulta = ultimaConsulta;
         this.dados = dados;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String verificarAlerta() {
@@ -44,5 +48,21 @@ public class PrevisaoClimatica {
 
     public void setDados(String dados) {
         this.dados = dados;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }

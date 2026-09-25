@@ -1,15 +1,15 @@
 package com.mobicidade.model;
 
-public class Assinante extends Usuario {
+public class UsuarioAssinante extends Usuario {
 
     private static final double TARIFA_EXCEDENTE_POR_MINUTO = 0.50;
     private int minutosInclusos;
 
-    public Assinante() {
+    public UsuarioAssinante() {
         super();
     }
 
-    public Assinante(String nome, String cpf, String formaDePagamento, int minutosInclusos) {
+    public UsuarioAssinante(String nome, String cpf, String formaDePagamento, int minutosInclusos) {
         super(nome, cpf, formaDePagamento);
         this.minutosInclusos = minutosInclusos;
     }
