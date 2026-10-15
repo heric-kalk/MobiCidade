@@ -13,6 +13,7 @@ import com.mobicidade.repository.VeiculoRepositorioMemoria;
 import com.mobicidade.service.CorridaServicoImpl;
 import com.mobicidade.service.EstacaoServicoImpl;
 import com.mobicidade.service.ManutencaoServicoImpl;
+import com.mobicidade.service.ProvedorPrevisaoClimatica;
 import com.mobicidade.service.UsuarioServicoImpl;
 import com.mobicidade.service.VeiculoServicoImpl;
 
@@ -25,6 +26,10 @@ public final class AplicacaoMobiCidade {
     private final ManutencaoController manutencoes;
 
     public AplicacaoMobiCidade() {
+        this(ProvedorPrevisaoClimatica.semDados());
+    }
+
+    public AplicacaoMobiCidade(ProvedorPrevisaoClimatica previsaoClimatica) {
         EstacaoRepositorioMemoria estacaoRepositorio = new EstacaoRepositorioMemoria();
         VeiculoRepositorioMemoria veiculoRepositorio = new VeiculoRepositorioMemoria();
         UsuarioRepositorioMemoria usuarioRepositorio = new UsuarioRepositorioMemoria();
@@ -34,7 +39,7 @@ public final class AplicacaoMobiCidade {
         this.estacoes = new EstacaoController(new EstacaoServicoImpl(estacaoRepositorio));
         this.veiculos = new VeiculoController(new VeiculoServicoImpl(veiculoRepositorio, estacaoRepositorio));
         this.usuarios = new UsuarioController(new UsuarioServicoImpl(usuarioRepositorio));
-        this.corridas = new CorridaController(new CorridaServicoImpl(corridaRepositorio));
+        this.corridas = new CorridaController(new CorridaServicoImpl(corridaRepositorio, previsaoClimatica));
         this.manutencoes = new ManutencaoController(new ManutencaoServicoImpl(manutencaoRepositorio));
     }
 

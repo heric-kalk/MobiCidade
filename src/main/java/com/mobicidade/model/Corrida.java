@@ -26,9 +26,6 @@ public class Corrida {
         this.veiculo = veiculo;
         this.estacaoOrigem = estacaoOrigem;
         this.dataHoraInicio = LocalDateTime.now();
-        if (veiculo != null) {
-            veiculo.alterarDisponibilidade(StatusVeiculo.EM_USO);
-        }
     }
 
     public void finalizarCorrida() {
