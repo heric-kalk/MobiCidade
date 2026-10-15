@@ -6,6 +6,12 @@ Sistema para gestão de uma frota compartilhada de bicicletas e patinetes elétr
 
 Como diferencial, o sistema consulta em tempo real as condições climáticas da cidade via API pública, bloqueando o início de novas corridas quando há previsão de chuva forte ou tempestade, por questão de segurança do usuário.
 
+## Escopo desta implementação inicial
+
+Esta etapa entrega as classes de domínio e seus relacionamentos, CRUDs em memória para Estação, Veículo, Usuário, Corrida e Manutenção, e a separação em camadas com interfaces. **As telas não foram implementadas**: o arquivo `modelo_navegacional_mobicidade.png` documenta somente as telas previstas e as transições entre elas, conforme solicitado para esta atividade.
+
+Os dados ficam em memória e são perdidos ao encerrar o processo. Persistência em banco, interface gráfica, integração real com a API climática e relatórios ainda não fazem parte desta implementação inicial.
+
 ## Requisitos Funcionais
 
 ### 1. Cadastro de Veículos e Estações

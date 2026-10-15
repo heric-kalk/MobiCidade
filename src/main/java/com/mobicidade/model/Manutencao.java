@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class Manutencao {
 
+    private int id;
     private String descricao;
     private LocalDateTime dataInicio;
     private LocalDateTime dataFim;
@@ -29,6 +30,14 @@ public class Manutencao {
         if (veiculo != null) {
             veiculo.alterarDisponibilidade(StatusVeiculo.DISPONIVEL);
         }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDescricao() {

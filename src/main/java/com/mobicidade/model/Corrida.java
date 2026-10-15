@@ -7,6 +7,7 @@ public class Corrida {
 
     private static final double TAXA_ZONA_LIVRE = 5.0;
 
+    private int id;
     private LocalDateTime dataHoraInicio;
     private LocalDateTime dataHoraFim;
     private double duracao;
@@ -50,6 +51,14 @@ public class Corrida {
         double custoBase = (usuario != null) ? usuario.calcularCusto(calcularDuracao()) : 0.0;
         double taxaExtra = (estacaoDestino == null) ? TAXA_ZONA_LIVRE : 0.0;
         return custoBase + taxaExtra;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public LocalDateTime getDataHoraInicio() {

@@ -1,6 +1,7 @@
 package com.mobicidade.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Estacao {
@@ -35,11 +36,21 @@ public class Estacao {
     }
 
     public void adicionarVeiculo(Veiculo veiculo) {
-        this.veiculos.add(veiculo);
+        if (veiculo == null) {
+            throw new IllegalArgumentException("O veículo não pode ser nulo.");
+        }
+
+        boolean jaCadastrado = veiculos.stream()
+                .anyMatch(atual -> atual.getId() == veiculo.getId());
+        if (!jaCadastrado) {
+            this.veiculos.add(veiculo);
+        }
     }
 
     public void removerVeiculo(Veiculo veiculo) {
-        this.veiculos.remove(veiculo);
+        if (veiculo != null) {
+            this.veiculos.removeIf(atual -> atual.getId() == veiculo.getId());
+        }
     }
 
     public int getId() {
@@ -75,6 +86,6 @@ public class Estacao {
     }
 
     public List<Veiculo> getVeiculos() {
-        return veiculos;
+        return Collections.unmodifiableList(veiculos);
     }
 }
