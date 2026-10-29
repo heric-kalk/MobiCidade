@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public abstract class RepositorioMemoria<T, ID> implements Repositorio<T, ID> {
+public abstract class RepositorioMemoria<T, ID> implements IRepositorio<T, ID> {
 
     private final Map<ID, T> armazenamento = new LinkedHashMap<>();
 

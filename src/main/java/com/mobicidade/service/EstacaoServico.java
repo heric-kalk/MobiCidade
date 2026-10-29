@@ -1,10 +1,64 @@
 package com.mobicidade.service;
 
 import com.mobicidade.model.Estacao;
+import com.mobicidade.repository.IEstacaoRepositorio;
 
-public interface EstacaoServico extends Servico<Estacao, Integer> {
+public class EstacaoServico extends ServicoInteiroBase<Estacao> implements IEstacaoServico {
 
-    int veiculosDisponiveis(int idEstacao);
+    public EstacaoServico(IEstacaoRepositorio repositorio) {
+        super(repositorio);
+    }
 
-    int vagasLivres(int idEstacao);
+    @Override
+    protected Integer obterId(Estacao estacao) {
+        return estacao.getId();
+    }
+
+    @Override
+    protected void definirId(Estacao estacao, int id) {
+        estacao.setId(id);
+    }
+
+    @Override
+    protected String nomeEntidade() {
+        return "Estação";
+    }
+
+    // REQ01
+    @Override
+    protected void validar(Estacao estacao) {
+        exigir(estacao.getNome() != null && !estacao.getNome().isBlank(), "O nome da estação é obrigatório.");
+        exigir(estacao.getCapacidade() > 0, "A capacidade da estação deve ser maior que zero.");
+        exigir(estacao.getLatitude() >= -90 && estacao.getLatitude() <= 90, "Latitude inválida.");
+        exigir(estacao.getLongitude() >= -180 && estacao.getLongitude() <= 180, "Longitude inválida.");
+    }
+
+    @Override
+    protected void regrasDeAtualizacao(Estacao existente, Estacao novo) {
+        exigir(novo.getCapacidade() >= existente.getVeiculos().size(),
+                "A capacidade não pode ser menor que a quantidade de veículos na estação.");
+    }
+
+    @Override
+    protected void copiarCampos(Estacao existente, Estacao novo) {
+        existente.setNome(novo.getNome());
+        existente.setLatitude(novo.getLatitude());
+        existente.setLongitude(novo.getLongitude());
+        existente.setCapacidade(novo.getCapacidade());
+    }
+
+    @Override
+    protected void regrasDeRemocao(Estacao estacao) {
+        exigir(estacao.getVeiculos().isEmpty(), "Não é possível remover uma estação que ainda possui veículos.");
+    }
+
+    @Override
+    public int veiculosDisponiveis(int idEstacao) {
+        return buscarPorId(idEstacao).veiculosDisponiveis();
+    }
+
+    @Override
+    public int vagasLivres(int idEstacao) {
+        return buscarPorId(idEstacao).vagasLivres();
+    }
 }

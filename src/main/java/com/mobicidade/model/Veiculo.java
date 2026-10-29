@@ -10,14 +10,19 @@ public abstract class Veiculo {
         this.status = StatusVeiculo.DISPONIVEL;
     }
 
-    protected Veiculo(int id, Estacao estacao) {
-        this.id = id;
+    protected Veiculo(Estacao estacao) {
         this.estacao = estacao;
         this.status = StatusVeiculo.DISPONIVEL;
     }
 
+    public abstract String getTipo();
+
     public void alterarDisponibilidade(StatusVeiculo status) {
         this.status = status;
+    }
+
+    public boolean estaDisponivel() {
+        return status == StatusVeiculo.DISPONIVEL;
     }
 
     public int getId() {
@@ -42,5 +47,10 @@ public abstract class Veiculo {
 
     public void setEstacao(Estacao estacao) {
         this.estacao = estacao;
+    }
+
+    @Override
+    public String toString() {
+        return getTipo() + " " + id + " [" + status + (estacao != null ? ", estação " + estacao.getId() : "") + "]";
     }
 }

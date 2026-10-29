@@ -2,7 +2,7 @@ package com.mobicidade.model;
 
 public class UsuarioComum extends Usuario {
 
-    private static final double TARIFA_POR_MINUTO = 0.80;
+    public static final double TARIFA_POR_MINUTO = 0.80;
 
     public UsuarioComum() {
         super();
@@ -13,7 +13,12 @@ public class UsuarioComum extends Usuario {
     }
 
     @Override
-    public double calcularCusto(double duracao) {
-        return duracao * TARIFA_POR_MINUTO;
+    public String getTipo() {
+        return "Comum";
+    }
+
+    @Override
+    public double calcularCusto(int duracaoMinutos) {
+        return duracaoMinutos * TARIFA_POR_MINUTO;
     }
 }

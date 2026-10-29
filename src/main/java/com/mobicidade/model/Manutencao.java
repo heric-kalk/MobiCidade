@@ -18,18 +18,27 @@ public class Manutencao {
         this.veiculo = veiculo;
     }
 
-    public void registrar() {
-        this.dataInicio = LocalDateTime.now();
-        if (veiculo != null) {
-            veiculo.alterarDisponibilidade(StatusVeiculo.MANUTENCAO);
+    // REQ13
+    public void registrar(LocalDateTime inicio) {
+        this.dataInicio = inicio;
+        if (veiculo.getEstacao() != null) {
+            veiculo.getEstacao().liberarVeiculo(veiculo);
+        }
+        veiculo.alterarDisponibilidade(StatusVeiculo.MANUTENCAO);
+    }
+
+    // REQ14
+    public void finalizar(Estacao destino, LocalDateTime fim) {
+        this.dataFim = fim;
+        destino.receberVeiculo(veiculo);
+        veiculo.alterarDisponibilidade(StatusVeiculo.DISPONIVEL);
+        if (veiculo instanceof Patinete) {
+            ((Patinete) veiculo).recarregar();
         }
     }
 
-    public void finalizar() {
-        this.dataFim = LocalDateTime.now();
-        if (veiculo != null) {
-            veiculo.alterarDisponibilidade(StatusVeiculo.DISPONIVEL);
-        }
+    public boolean emAndamento() {
+        return dataInicio != null && dataFim == null;
     }
 
     public int getId() {
@@ -60,15 +69,17 @@ public class Manutencao {
         return dataFim;
     }
 
-    public void setDataFim(LocalDateTime dataFim) {
-        this.dataFim = dataFim;
-    }
-
     public Veiculo getVeiculo() {
         return veiculo;
     }
 
     public void setVeiculo(Veiculo veiculo) {
         this.veiculo = veiculo;
+    }
+
+    @Override
+    public String toString() {
+        return "Manutenção " + id + " [" + descricao + " / " + (veiculo != null ? veiculo.getTipo() + " " + veiculo.getId() : "?")
+                + " / " + (emAndamento() ? "em andamento" : "concluída") + "]";
     }
 }

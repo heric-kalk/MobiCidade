@@ -2,7 +2,7 @@ package com.mobicidade.service;
 
 import java.util.List;
 
-public interface Servico<T, ID> {
+public interface IServico<T, ID> {
 
     T cadastrar(T entidade);
 

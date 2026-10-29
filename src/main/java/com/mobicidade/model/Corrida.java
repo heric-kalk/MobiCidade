@@ -5,12 +5,13 @@ import java.time.LocalDateTime;
 
 public class Corrida {
 
-    private static final double TAXA_ZONA_LIVRE = 5.0;
+    // REQ12
+    public static final double TAXA_ZONA_LIVRE = 5.0;
 
     private int id;
     private LocalDateTime dataHoraInicio;
     private LocalDateTime dataHoraFim;
-    private double duracao;
+    private int duracao;
     private double tarifa;
 
     private Usuario usuario;
@@ -20,33 +21,66 @@ public class Corrida {
 
     public Corrida() {
     }
-    
+
     public Corrida(Usuario usuario, Veiculo veiculo, Estacao estacaoOrigem) {
         this.usuario = usuario;
         this.veiculo = veiculo;
         this.estacaoOrigem = estacaoOrigem;
-        this.dataHoraInicio = LocalDateTime.now();
     }
 
-    public void finalizarCorrida() {
-        this.dataHoraFim = LocalDateTime.now();
+    // REQ09
+    public void iniciar(LocalDateTime inicio) {
+        this.dataHoraInicio = inicio;
+        estacaoOrigem.liberarVeiculo(veiculo);
+        veiculo.alterarDisponibilidade(StatusVeiculo.EM_USO);
+    }
+
+    // REQ10 a REQ12
+    public void finalizar(Estacao destino, LocalDateTime fim) {
+        this.dataHoraFim = fim;
+        this.estacaoDestino = destino;
         this.duracao = calcularDuracao();
         this.tarifa = calcularTarifa();
-        if (veiculo != null) {
-            veiculo.alterarDisponibilidade(StatusVeiculo.DISPONIVEL);
+
+        usuario.registrarUso(duracao);
+        if (veiculo instanceof Patinete) {
+            ((Patinete) veiculo).consumirBateria(duracao);
         }
+        if (destino != null) {
+            destino.receberVeiculo(veiculo);
+            veiculo.alterarDisponibilidade(StatusVeiculo.DISPONIVEL);
+        } else {
+            veiculo.alterarDisponibilidade(StatusVeiculo.FORA_DE_ESTACAO);
+        }
+    }
+
+    public boolean emAndamento() {
+        return dataHoraInicio != null && dataHoraFim == null;
+    }
+
+    public boolean finalizada() {
+        return dataHoraFim != null;
+    }
+
+    public boolean zonaLivre() {
+        return finalizada() && estacaoDestino == null;
     }
 
     public int calcularDuracao() {
-        if (dataHoraInicio == null || dataHoraFim == null) {
+        return calcularDuracao(dataHoraFim);
+    }
+
+    public int calcularDuracao(LocalDateTime fim) {
+        if (dataHoraInicio == null || fim == null || !fim.isAfter(dataHoraInicio)) {
             return 0;
         }
-        return (int) Duration.between(dataHoraInicio, dataHoraFim).toMinutes();
+        long nanos = Duration.between(dataHoraInicio, fim).toNanos();
+        return (int) ((nanos + 60_000_000_000L - 1) / 60_000_000_000L);
     }
 
     public double calcularTarifa() {
-        double custoBase = (usuario != null) ? usuario.calcularCusto(calcularDuracao()) : 0.0;
-        double taxaExtra = (estacaoDestino == null) ? TAXA_ZONA_LIVRE : 0.0;
+        double custoBase = usuario != null ? usuario.calcularCusto(calcularDuracao()) : 0.0;
+        double taxaExtra = estacaoDestino == null ? TAXA_ZONA_LIVRE : 0.0;
         return custoBase + taxaExtra;
     }
 
@@ -74,20 +108,12 @@ public class Corrida {
         this.dataHoraFim = dataHoraFim;
     }
 
-    public double getDuracao() {
+    public int getDuracao() {
         return duracao;
-    }
-
-    public void setDuracao(double duracao) {
-        this.duracao = duracao;
     }
 
     public double getTarifa() {
         return tarifa;
-    }
-
-    public void setTarifa(double tarifa) {
-        this.tarifa = tarifa;
     }
 
     public Usuario getUsuario() {
@@ -118,7 +144,11 @@ public class Corrida {
         return estacaoDestino;
     }
 
-    public void setEstacaoDestino(Estacao estacaoDestino) {
-        this.estacaoDestino = estacaoDestino;
+    @Override
+    public String toString() {
+        String situacao = emAndamento() ? "em andamento"
+                : String.format("%d min, R$ %.2f%s", duracao, tarifa, zonaLivre() ? " (zona livre)" : "");
+        return "Corrida " + id + " [" + (usuario != null ? usuario.getNome() : "?") + " / "
+                + (veiculo != null ? veiculo.getTipo() + " " + veiculo.getId() : "?") + " / " + situacao + "]";
     }
 }

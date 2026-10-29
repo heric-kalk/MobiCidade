@@ -3,7 +3,7 @@ package com.mobicidade.repository;
 import java.util.List;
 import java.util.Optional;
 
-public interface Repositorio<T, ID> {
+public interface IRepositorio<T, ID> {
 
     T salvar(T entidade);
 

@@ -1,132 +1,166 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 992" width="1500" height="992" font-family="Arial" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTozMzE4ZGQ3MC0yNTE0LTRjZDEtODU4OC0zODgyMjNkNDk2NDEAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaArkfgJkWM8H2aPE20JGSPUAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDpmODhlMzEwYi0wNjEwLTRkNGYtODNkZC02ZDM0Njg0ZTNjM2RscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNoViVIbYEfhzk7hcm0HbGmxgAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggSz7onh6iBuhqHNfeUKPQsLLWc41AgAShNhwmpFgFWC+kZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaBU3wXOw0h+fCT2eNhw6gwkAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRNAAAAAAAAAAAAAAAAAGRoYXNoWCBwFZqYut+FF1EfNBmg7MqYCVXCl/BwlhBz7OqDRAfbMGRuYW1lbmp1bWJmIG1hbmlmZXN0amV4Y2x1c2lvbnOBomVzdGFydBisZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjMzMThkZDcwLTI1MTQtNGNkMS04NTg4LTM4ODIyM2Q0OTY0MS9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOmI4YWEzOTgzLTU1OWQtNGMyNy04OTY0LWM3NDZmMGFiMjRiNnJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCBLPuieHqIG6Goc195Qo9CwstZzjUCABKE2HCakWAVYL6JjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggbaqoRDIyF4oIxVYROQUmOk1P1AXHKG5b1PSvuY5T55WiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggKYqc4cvSbX3PoI3fKcaaW+vqVVTpwswpnK4cxtAo/GZ0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQNSosluz/BQ+FZAu7g030CC+QwHO7zvA2u+AgHiWJfW0ehvnx8bBUZ/qxI7FHjmxwUhSSZQkJ/+wxrP09fHzWeQ=</c2pa:manifest></metadata>
-<rect x="0" y="0" width="1500" height="992" fill="white"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1860 1060" width="1860" height="1060" font-family="Arial">
 <defs>
-<marker id="triHollow" markerWidth="16" markerHeight="14" refX="15" refY="7" orient="auto"><polygon points="0,0 16,7 0,14" fill="white" stroke="black"/></marker>
-<marker id="openArrow" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10" fill="none" stroke="black"/></marker>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M1,1 L9,5 L1,9" fill="none" stroke="#333" stroke-width="1.4"/></marker>
+<marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="13" markerHeight="13" orient="auto"><path d="M1,1 L11,6 L1,11 Z" fill="#fff" stroke="#333" stroke-width="1.4"/></marker>
 </defs>
-<rect x="5" y="5" width="1490" height="982" fill="none" stroke="black" stroke-width="1"/>
-<path d="M5,5 L155,5 L155,29 L143,39 L5,39 Z" fill="white" stroke="black" stroke-width="1"/>
-<text x="15" y="21" font-size="13" text-anchor="start" font-family="Arial">pkg MobiCidade</text>
-<polyline points="880.0,260 880.0,207.0 700.0,207.0 700.0,154" stroke="black" stroke-width="1" fill="none" stroke-dasharray="6,4" marker-end="url(#openArrow)"/>
-<polyline points="290,308.6 610,290.6" stroke="black" stroke-width="1" fill="none"/>
-<rect x="426.4" y="287.6" width="47.2" height="14" fill="white" opacity="0.85"/>
-<text x="450.0" y="298.6" font-size="13" text-anchor="middle" font-family="Arial">possui</text>
-<rect x="304" y="287.6" width="11.2" height="14" fill="white" opacity="0.85"/>
-<text x="306" y="298.6" font-size="13" text-anchor="start" font-family="Arial">1</text>
-<rect x="563.2" y="269.6" width="32.8" height="14" fill="white" opacity="0.85"/>
-<text x="594" y="280.6" font-size="13" text-anchor="end" font-family="Arial">0..*</text>
-<polyline points="970,290.6 1120,302.6" stroke="black" stroke-width="1" fill="none"/>
-<rect x="984" y="269.6" width="11.2" height="14" fill="white" opacity="0.85"/>
-<text x="986" y="280.6" font-size="13" text-anchor="start" font-family="Arial">1</text>
-<rect x="1073.2" y="281.6" width="32.8" height="14" fill="white" opacity="0.85"/>
-<text x="1104" y="292.6" font-size="13" text-anchor="end" font-family="Arial">0..*</text>
-<polyline points="845.0,560 845.0,461.0 772.0,461.0 772.0,362" stroke="black" stroke-width="1" fill="none" marker-end="url(#triHollow)"/>
-<polyline points="1035.0,560 1035.0,461.0 880.0,461.0 880.0,362" stroke="black" stroke-width="1" fill="none" marker-end="url(#triHollow)"/>
-<polyline points="631.6,362 631.6,461.0 648.4,461.0 648.4,560" stroke="black" stroke-width="1" fill="none"/>
-<rect x="639.6" y="365" width="11.2" height="14" fill="white" opacity="0.85"/>
-<text x="641.6" y="376" font-size="13" text-anchor="start" font-family="Arial">1</text>
-<rect x="656.4" y="541" width="32.8" height="14" fill="white" opacity="0.85"/>
-<text x="658.4" y="552" font-size="13" text-anchor="start" font-family="Arial">0..*</text>
-<polyline points="102.5,422 102.5,462 421.6,462 421.6,560" stroke="black" stroke-width="1" fill="none"/>
-<rect x="112.5" y="427" width="11.2" height="14" fill="white" opacity="0.85"/>
-<text x="114.5" y="438" font-size="13" text-anchor="start" font-family="Arial">1</text>
-<rect x="238.45000000000002" y="443" width="47.2" height="14" fill="white" opacity="0.85"/>
-<text x="262.05" y="454" font-size="13" text-anchor="middle" font-family="Arial">origem</text>
-<rect x="429.6" y="541" width="32.8" height="14" fill="white" opacity="0.85"/>
-<text x="431.6" y="552" font-size="13" text-anchor="start" font-family="Arial">0..*</text>
-<polyline points="215.0,422 215.0,492 481.0,492 481.0,560" stroke="black" stroke-width="1" fill="none"/>
-<rect x="225.0" y="427" width="32.8" height="14" fill="white" opacity="0.85"/>
-<text x="227.0" y="438" font-size="13" text-anchor="start" font-family="Arial">0..1</text>
-<rect x="320.8" y="473" width="54.4" height="14" fill="white" opacity="0.85"/>
-<text x="348.0" y="484" font-size="13" text-anchor="middle" font-family="Arial">destino</text>
-<rect x="489.0" y="541" width="32.8" height="14" fill="white" opacity="0.85"/>
-<text x="491.0" y="552" font-size="13" text-anchor="start" font-family="Arial">0..*</text>
-<polyline points="300,651.5 400,714.7" stroke="black" stroke-width="1" fill="none"/>
-<rect x="312" y="632.5" width="11.2" height="14" fill="white" opacity="0.85"/>
-<text x="314" y="643.5" font-size="13" text-anchor="start" font-family="Arial">1</text>
-<rect x="355.2" y="695.7" width="32.8" height="14" fill="white" opacity="0.85"/>
-<text x="386" y="706.7" font-size="13" text-anchor="end" font-family="Arial">0..*</text>
-<polyline points="165.0,860 165.0,771.0 105.0,771.0 105.0,682" stroke="black" stroke-width="1" fill="none" marker-end="url(#triHollow)"/>
-<polyline points="465.0,860 465.0,771.0 209.0,771.0 209.0,682" stroke="black" stroke-width="1" fill="none" marker-end="url(#triHollow)"/>
-<rect x="590" y="40" width="220" height="114" fill="#FFFFCC" stroke="black" stroke-width="1"/>
-<text x="700.0" y="60" font-size="13" text-anchor="middle" font-style="italic" font-family="Arial">&#171;enumeration&#187;</text>
-<text x="700.0" y="80" font-size="14" text-anchor="middle" font-weight="bold" font-family="Arial">StatusVeiculo</text>
-<line x1="590" y1="86" x2="810" y2="86" stroke="black" stroke-width="1"/>
-<line x1="590" y1="86" x2="810" y2="86" stroke="black" stroke-width="1"/>
-<text x="596" y="100" font-size="13" font-family="Arial">DISPONIVEL</text>
-<text x="596" y="120" font-size="13" font-family="Arial">EM_USO</text>
-<text x="596" y="140" font-size="13" font-family="Arial">MANUTENCAO</text>
-<rect x="40" y="260" width="250" height="162" fill="#FFFFCC" stroke="black" stroke-width="1"/>
-<text x="165.0" y="280" font-size="14" text-anchor="middle" font-weight="bold" font-family="Arial">Estacao</text>
-<line x1="40" y1="286" x2="290" y2="286" stroke="black" stroke-width="1"/>
-<text x="46" y="300" font-size="13" font-family="Arial">- id : int</text>
-<text x="46" y="320" font-size="13" font-family="Arial">- latitude : double</text>
-<text x="46" y="340" font-size="13" font-family="Arial">- longitude : double</text>
-<text x="46" y="360" font-size="13" font-family="Arial">- capacidade : int</text>
-<line x1="40" y1="374" x2="290" y2="374" stroke="black" stroke-width="1"/>
-<text x="46" y="388" font-size="13" font-family="Arial">+ veiculosDisponiveis() : int</text>
-<text x="46" y="408" font-size="13" font-family="Arial">+ vagasLivres() : int</text>
-<rect x="610" y="260" width="360" height="102" fill="#FFFFCC" stroke="black" stroke-width="1"/>
-<text x="790.0" y="280" font-size="14" text-anchor="middle" font-weight="bold" font-style="italic" font-family="Arial">Veiculo</text>
-<line x1="610" y1="286" x2="970" y2="286" stroke="black" stroke-width="1"/>
-<text x="616" y="300" font-size="13" font-family="Arial">- id : int</text>
-<text x="616" y="320" font-size="13" font-family="Arial">- status : StatusVeiculo</text>
-<line x1="610" y1="334" x2="970" y2="334" stroke="black" stroke-width="1"/>
-<text x="616" y="348" font-size="13" font-family="Arial">+ alterarDisponibilidade(status : StatusVeiculo) : void</text>
-<rect x="1120" y="260" width="260" height="142" fill="#FFFFCC" stroke="black" stroke-width="1"/>
-<text x="1250.0" y="280" font-size="14" text-anchor="middle" font-weight="bold" font-family="Arial">Manutencao</text>
-<line x1="1120" y1="286" x2="1380" y2="286" stroke="black" stroke-width="1"/>
-<text x="1126" y="300" font-size="13" font-family="Arial">- descricao : String</text>
-<text x="1126" y="320" font-size="13" font-family="Arial">- dataInicio : LocalDateTime</text>
-<text x="1126" y="340" font-size="13" font-family="Arial">- dataFim : LocalDateTime</text>
-<line x1="1120" y1="354" x2="1380" y2="354" stroke="black" stroke-width="1"/>
-<text x="1126" y="368" font-size="13" font-family="Arial">+ registrar() : void</text>
-<text x="1126" y="388" font-size="13" font-family="Arial">+ finalizar() : void</text>
-<rect x="40" y="560" width="260" height="122" fill="#FFFFCC" stroke="black" stroke-width="1"/>
-<text x="170.0" y="580" font-size="14" text-anchor="middle" font-weight="bold" font-style="italic" font-family="Arial">Usuario</text>
-<line x1="40" y1="586" x2="300" y2="586" stroke="black" stroke-width="1"/>
-<text x="46" y="600" font-size="13" font-family="Arial">- nome : String</text>
-<text x="46" y="620" font-size="13" font-family="Arial">- cpf : String</text>
-<text x="46" y="640" font-size="13" font-family="Arial">- formaDePagamento : String</text>
-<line x1="40" y1="654" x2="300" y2="654" stroke="black" stroke-width="1"/>
-<text x="46" y="668" font-size="13" font-family="Arial">+ calcularCusto(duracao : double) : double</text>
-<rect x="400" y="560" width="270" height="182" fill="#FFFFCC" stroke="black" stroke-width="1"/>
-<text x="535.0" y="580" font-size="14" text-anchor="middle" font-weight="bold" font-family="Arial">Corrida</text>
-<line x1="400" y1="586" x2="670" y2="586" stroke="black" stroke-width="1"/>
-<text x="406" y="600" font-size="13" font-family="Arial">- dataHoraInicio : LocalDateTime</text>
-<text x="406" y="620" font-size="13" font-family="Arial">- dataHoraFim : LocalDateTime</text>
-<text x="406" y="640" font-size="13" font-family="Arial">- duracao : double</text>
-<text x="406" y="660" font-size="13" font-family="Arial">- tarifa : double</text>
-<line x1="400" y1="674" x2="670" y2="674" stroke="black" stroke-width="1"/>
-<text x="406" y="688" font-size="13" font-family="Arial">+ finalizarCorrida() : void</text>
-<text x="406" y="708" font-size="13" font-family="Arial">+ calcularDuracao() : int</text>
-<text x="406" y="728" font-size="13" font-family="Arial">+ calcularTarifa() : double</text>
-<rect x="770" y="560" width="150" height="26" fill="#FFFFCC" stroke="black" stroke-width="1"/>
-<text x="845.0" y="580" font-size="14" text-anchor="middle" font-weight="bold" font-family="Arial">Bicicleta</text>
-<line x1="770" y1="586" x2="920" y2="586" stroke="black" stroke-width="1"/>
-<line x1="770" y1="586" x2="920" y2="586" stroke="black" stroke-width="1"/>
-<rect x="950" y="560" width="170" height="54" fill="#FFFFCC" stroke="black" stroke-width="1"/>
-<text x="1035.0" y="580" font-size="14" text-anchor="middle" font-weight="bold" font-family="Arial">Patinete</text>
-<line x1="950" y1="586" x2="1120" y2="586" stroke="black" stroke-width="1"/>
-<text x="956" y="600" font-size="13" font-family="Arial">- bateria : double</text>
-<line x1="950" y1="614" x2="1120" y2="614" stroke="black" stroke-width="1"/>
-<rect x="1160" y="560" width="300" height="122" fill="#FFFFCC" stroke="black" stroke-width="1"/>
-<text x="1310.0" y="580" font-size="14" text-anchor="middle" font-weight="bold" font-family="Arial">PrevisaoClimatica</text>
-<line x1="1160" y1="586" x2="1460" y2="586" stroke="black" stroke-width="1"/>
-<text x="1166" y="600" font-size="13" font-family="Arial">- ultimaConsulta : LocalDateTime</text>
-<text x="1166" y="620" font-size="13" font-family="Arial">- dados : String</text>
-<line x1="1160" y1="634" x2="1460" y2="634" stroke="black" stroke-width="1"/>
-<text x="1166" y="648" font-size="13" font-family="Arial">+ verificarAlerta() : String</text>
-<text x="1166" y="668" font-size="13" font-family="Arial">+ consultarPrevisao() : String</text>
-<rect x="40" y="860" width="250" height="54" fill="#FFFFCC" stroke="black" stroke-width="1"/>
-<text x="165.0" y="880" font-size="14" text-anchor="middle" font-weight="bold" font-family="Arial">Comum</text>
-<line x1="40" y1="886" x2="290" y2="886" stroke="black" stroke-width="1"/>
-<line x1="40" y1="886" x2="290" y2="886" stroke="black" stroke-width="1"/>
-<text x="46" y="900" font-size="13" font-family="Arial">+ calcularCusto(duracao : double) : double</text>
-<rect x="330" y="860" width="270" height="82" fill="#FFFFCC" stroke="black" stroke-width="1"/>
-<text x="465.0" y="880" font-size="14" text-anchor="middle" font-weight="bold" font-family="Arial">Assinante</text>
-<line x1="330" y1="886" x2="600" y2="886" stroke="black" stroke-width="1"/>
-<text x="336" y="900" font-size="13" font-family="Arial">- minutosInclusos : int</text>
-<line x1="330" y1="914" x2="600" y2="914" stroke="black" stroke-width="1"/>
-<text x="336" y="928" font-size="13" font-family="Arial">+ calcularCusto(duracao : double) : double</text>
+<rect width="1860" height="1060" fill="#fff"/>
+<text x="20" y="28" font-size="14" fill="#555">pkg MobiCidade (model)</text>
+<rect x="40" y="50" width="380" height="186" fill="#fdf6e3" stroke="#333" stroke-width="1.6"/>
+<text x="230.0" y="72" text-anchor="middle" font-size="16" font-weight="bold" font-style="italic" >Usuario</text>
+<line x1="40" y1="90" x2="420" y2="90" stroke="#333"/>
+<text x="50" y="110" font-size="13">- nome : String</text>
+<text x="50" y="131" font-size="13">- cpf : String</text>
+<text x="50" y="152" font-size="13">- formaDePagamento : String</text>
+<line x1="40" y1="163" x2="420" y2="163" stroke="#333"/>
+<text x="50" y="183" font-size="13">+ getTipo() : String {abstract}</text>
+<text x="50" y="204" font-size="13">+ calcularCusto(duracaoMinutos : int) : double {abstract}</text>
+<text x="50" y="225" font-size="13">+ registrarUso(duracaoMinutos : int) : void</text>
+<rect x="20" y="370" width="340" height="123" fill="#fdf6e3" stroke="#333" stroke-width="1.6"/>
+<text x="190.0" y="392" text-anchor="middle" font-size="16" font-weight="bold" >UsuarioComum</text>
+<line x1="20" y1="410" x2="360" y2="410" stroke="#333"/>
+<text x="30" y="430" font-size="13">{TARIFA_POR_MINUTO = 0,80}</text>
+<line x1="20" y1="441" x2="360" y2="441" stroke="#333"/>
+<text x="30" y="461" font-size="13">+ getTipo() : String</text>
+<text x="30" y="482" font-size="13">+ calcularCusto(duracaoMinutos : int) : double</text>
+<rect x="380" y="370" width="330" height="228" fill="#fdf6e3" stroke="#333" stroke-width="1.6"/>
+<text x="545.0" y="392" text-anchor="middle" font-size="16" font-weight="bold" >UsuarioAssinante</text>
+<line x1="380" y1="410" x2="710" y2="410" stroke="#333"/>
+<text x="390" y="430" font-size="13">- minutosInclusos : int</text>
+<text x="390" y="451" font-size="13">- minutosConsumidos : int</text>
+<text x="390" y="472" font-size="13">{TARIFA_EXCEDENTE_POR_MINUTO = 0,50}</text>
+<line x1="380" y1="483" x2="710" y2="483" stroke="#333"/>
+<text x="390" y="503" font-size="13">+ getTipo() : String</text>
+<text x="390" y="524" font-size="13">+ minutosRestantes() : int</text>
+<text x="390" y="545" font-size="13">+ calcularCusto(duracaoMinutos : int) : double</text>
+<text x="390" y="566" font-size="13">+ registrarUso(duracaoMinutos : int) : void</text>
+<text x="390" y="587" font-size="13">+ renovarPlano() : void</text>
+<rect x="760" y="50" width="420" height="333" fill="#fdf6e3" stroke="#333" stroke-width="1.6"/>
+<text x="970.0" y="72" text-anchor="middle" font-size="16" font-weight="bold" >Corrida</text>
+<line x1="760" y1="90" x2="1180" y2="90" stroke="#333"/>
+<text x="770" y="110" font-size="13">- id : int</text>
+<text x="770" y="131" font-size="13">- dataHoraInicio : LocalDateTime</text>
+<text x="770" y="152" font-size="13">- dataHoraFim : LocalDateTime</text>
+<text x="770" y="173" font-size="13">- duracao : int</text>
+<text x="770" y="194" font-size="13">- tarifa : double</text>
+<text x="770" y="215" font-size="13">{TAXA_ZONA_LIVRE = 5,00}</text>
+<line x1="760" y1="226" x2="1180" y2="226" stroke="#333"/>
+<text x="770" y="246" font-size="13">+ iniciar(inicio : LocalDateTime) : void</text>
+<text x="770" y="267" font-size="13">+ finalizar(destino : Estacao, fim : LocalDateTime) : void</text>
+<text x="770" y="288" font-size="13">+ calcularDuracao() : int</text>
+<text x="770" y="309" font-size="13">+ calcularTarifa() : double</text>
+<text x="770" y="330" font-size="13">+ emAndamento() : boolean</text>
+<text x="770" y="351" font-size="13">+ finalizada() : boolean</text>
+<text x="770" y="372" font-size="13">+ zonaLivre() : boolean</text>
+<rect x="1350" y="50" width="440" height="291" fill="#fdf6e3" stroke="#333" stroke-width="1.6"/>
+<text x="1570.0" y="72" text-anchor="middle" font-size="16" font-weight="bold" >Estacao</text>
+<line x1="1350" y1="90" x2="1790" y2="90" stroke="#333"/>
+<text x="1360" y="110" font-size="13">- id : int</text>
+<text x="1360" y="131" font-size="13">- nome : String</text>
+<text x="1360" y="152" font-size="13">- latitude : double</text>
+<text x="1360" y="173" font-size="13">- longitude : double</text>
+<text x="1360" y="194" font-size="13">- capacidade : int</text>
+<line x1="1350" y1="205" x2="1790" y2="205" stroke="#333"/>
+<text x="1360" y="225" font-size="13">+ veiculosDisponiveis() : int</text>
+<text x="1360" y="246" font-size="13">+ vagasLivres() : int</text>
+<text x="1360" y="267" font-size="13">+ temVaga() : boolean</text>
+<text x="1360" y="288" font-size="13">+ receberVeiculo(veiculo : Veiculo) : void</text>
+<text x="1360" y="309" font-size="13">+ liberarVeiculo(veiculo : Veiculo) : void</text>
+<text x="1360" y="330" font-size="13">+ possuiVeiculo(veiculo : Veiculo) : boolean</text>
+<rect x="1350" y="470" width="440" height="186" fill="#fdf6e3" stroke="#333" stroke-width="1.6"/>
+<text x="1570.0" y="492" text-anchor="middle" font-size="16" font-weight="bold" font-style="italic" >Veiculo</text>
+<line x1="1350" y1="510" x2="1790" y2="510" stroke="#333"/>
+<text x="1360" y="530" font-size="13">- id : int</text>
+<text x="1360" y="551" font-size="13">- status : StatusVeiculo</text>
+<text x="1360" y="572" font-size="13">- estacao : Estacao  [null se em uso/manutenção/zona livre]</text>
+<line x1="1350" y1="583" x2="1790" y2="583" stroke="#333"/>
+<text x="1360" y="603" font-size="13">+ getTipo() : String {abstract}</text>
+<text x="1360" y="624" font-size="13">+ alterarDisponibilidade(status : StatusVeiculo) : void</text>
+<text x="1360" y="645" font-size="13">+ estaDisponivel() : boolean</text>
+<rect x="1000" y="720" width="200" height="102" fill="#fdf6e3" stroke="#333" stroke-width="1.6"/>
+<text x="1100.0" y="742" text-anchor="middle" font-size="16" font-weight="bold" >Bicicleta</text>
+<line x1="1000" y1="760" x2="1200" y2="760" stroke="#333"/>
+<line x1="1000" y1="791" x2="1200" y2="791" stroke="#333"/>
+<text x="1010" y="811" font-size="13">+ getTipo() : String</text>
+<rect x="1230" y="720" width="330" height="186" fill="#fdf6e3" stroke="#333" stroke-width="1.6"/>
+<text x="1395.0" y="742" text-anchor="middle" font-size="16" font-weight="bold" >Patinete</text>
+<line x1="1230" y1="760" x2="1560" y2="760" stroke="#333"/>
+<text x="1240" y="780" font-size="13">- bateria : double</text>
+<text x="1240" y="801" font-size="13">{CONSUMO_BATERIA_POR_MINUTO = 0,5}</text>
+<line x1="1230" y1="812" x2="1560" y2="812" stroke="#333"/>
+<text x="1240" y="832" font-size="13">+ getTipo() : String</text>
+<text x="1240" y="853" font-size="13">+ bateriaSuficiente(limiar : double) : boolean</text>
+<text x="1240" y="874" font-size="13">+ consumirBateria(minutos : int) : void</text>
+<text x="1240" y="895" font-size="13">+ recarregar() : void</text>
+<rect x="760" y="470" width="420" height="207" fill="#fdf6e3" stroke="#333" stroke-width="1.6"/>
+<text x="970.0" y="492" text-anchor="middle" font-size="16" font-weight="bold" >Manutencao</text>
+<line x1="760" y1="510" x2="1180" y2="510" stroke="#333"/>
+<text x="770" y="530" font-size="13">- id : int</text>
+<text x="770" y="551" font-size="13">- descricao : String</text>
+<text x="770" y="572" font-size="13">- dataInicio : LocalDateTime</text>
+<text x="770" y="593" font-size="13">- dataFim : LocalDateTime</text>
+<line x1="760" y1="604" x2="1180" y2="604" stroke="#333"/>
+<text x="770" y="624" font-size="13">+ registrar(inicio : LocalDateTime) : void</text>
+<text x="770" y="645" font-size="13">+ finalizar(destino : Estacao, fim : LocalDateTime) : void</text>
+<text x="770" y="666" font-size="13">+ emAndamento() : boolean</text>
+<rect x="1620" y="720" width="220" height="150" fill="#eef6ee" stroke="#333" stroke-width="1.6"/>
+<text x="1730.0" y="737" text-anchor="middle" font-size="12">&#171;enumeration&#187;</text>
+<text x="1730.0" y="756" text-anchor="middle" font-size="16" font-weight="bold" >StatusVeiculo</text>
+<line x1="1620" y1="776" x2="1840" y2="776" stroke="#333"/>
+<text x="1630" y="796" font-size="13">DISPONIVEL</text>
+<text x="1630" y="817" font-size="13">EM_USO</text>
+<text x="1630" y="838" font-size="13">MANUTENCAO</text>
+<text x="1630" y="859" font-size="13">FORA_DE_ESTACAO</text>
+<rect x="40" y="740" width="560" height="270" fill="#fdf6e3" stroke="#333" stroke-width="1.6"/>
+<text x="320.0" y="762" text-anchor="middle" font-size="16" font-weight="bold" >PrevisaoClimatica</text>
+<line x1="40" y1="780" x2="600" y2="780" stroke="#333"/>
+<text x="50" y="800" font-size="13">- ultimaConsulta : LocalDateTime</text>
+<text x="50" y="821" font-size="13">- latitude : double</text>
+<text x="50" y="842" font-size="13">- longitude : double</text>
+<text x="50" y="863" font-size="13">- codigosTempo : List&lt;Integer&gt;</text>
+<text x="50" y="884" font-size="13">- precipitacaoMmPorHora : List&lt;Double&gt;</text>
+<text x="50" y="905" font-size="13">- desatualizada : boolean</text>
+<line x1="40" y1="916" x2="600" y2="916" stroke="#333"/>
+<text x="50" y="936" font-size="13">+ temDados() : boolean</text>
+<text x="50" y="957" font-size="13">+ verificarAlerta() : AlertaClimatico</text>
+<text x="50" y="978" font-size="13">+ consultarPrevisao() : String</text>
+<text x="50" y="999" font-size="13">+ comoDesatualizada() : PrevisaoClimatica</text>
+<rect x="700" y="860" width="220" height="129" fill="#eef6ee" stroke="#333" stroke-width="1.6"/>
+<text x="810.0" y="877" text-anchor="middle" font-size="12">&#171;enumeration&#187;</text>
+<text x="810.0" y="896" text-anchor="middle" font-size="16" font-weight="bold" >AlertaClimatico</text>
+<line x1="700" y1="916" x2="920" y2="916" stroke="#333"/>
+<text x="710" y="936" font-size="13">SEM_DADOS</text>
+<text x="710" y="957" font-size="13">SEM_ALERTA</text>
+<text x="710" y="978" font-size="13">ALERTA_CHUVA_FORTE</text>
+<polyline points="190,370 190,256 230,256 230,236" fill="none" stroke="#333" stroke-width="1.4" marker-end="url(#tri)"/>
+<polyline points="545,370 545,256 230,256" fill="none" stroke="#333" stroke-width="1.4"/>
+<polyline points="760,150 420,150" fill="none" stroke="#333" stroke-width="1.4"/>
+<text x="754" y="142" font-size="12" text-anchor="end" fill="#222">0..*</text>
+<text x="426" y="142" font-size="12" text-anchor="start" fill="#222">1</text>
+<text x="450" y="166" font-size="12" text-anchor="start" fill="#222">usuário</text>
+<polyline points="1180,110 1350,110" fill="none" stroke="#333" stroke-width="1.4"/>
+<text x="1186" y="102" font-size="12" text-anchor="start" fill="#222">0..*</text>
+<text x="1344" y="102" font-size="12" text-anchor="end" fill="#222">1</text>
+<text x="1265.0" y="128" font-size="12" text-anchor="middle" fill="#222">origem</text>
+<polyline points="1180,190 1350,190" fill="none" stroke="#333" stroke-width="1.4"/>
+<text x="1186" y="182" font-size="12" text-anchor="start" fill="#222">0..*</text>
+<text x="1344" y="182" font-size="12" text-anchor="end" fill="#222">0..1</text>
+<text x="1265.0" y="208" font-size="12" text-anchor="middle" fill="#222">destino</text>
+<polyline points="1570,341 1570,470" fill="none" stroke="#333" stroke-width="1.4"/>
+<text x="1578" y="357" font-size="12" text-anchor="start" fill="#222">1</text>
+<text x="1578" y="462" font-size="12" text-anchor="start" fill="#222">0..*</text>
+<text x="1562" y="409.5" font-size="12" text-anchor="end" fill="#222">possui  (estação 0..1)</text>
+<polyline points="1120,383 1120,413 1265,413 1265,500 1350,500" fill="none" stroke="#333" stroke-width="1.4"/>
+<text x="1126" y="399" font-size="12" text-anchor="start" fill="#222">0..*</text>
+<text x="1344" y="492" font-size="12" text-anchor="end" fill="#222">1</text>
+<text x="1080" y="429" font-size="12" text-anchor="end" fill="#222">veículo</text>
+<polyline points="1180,580 1350,580" fill="none" stroke="#333" stroke-width="1.4"/>
+<text x="1186" y="572" font-size="12" text-anchor="start" fill="#222">0..*</text>
+<text x="1344" y="572" font-size="12" text-anchor="end" fill="#222">1</text>
+<text x="1265.0" y="598" font-size="12" text-anchor="middle" fill="#222">veículo</text>
+<polyline points="1100.0,720 1100.0,681 1570,681 1570,656" fill="none" stroke="#333" stroke-width="1.4" marker-end="url(#tri)"/>
+<polyline points="1395.0,720 1395.0,681" fill="none" stroke="#333" stroke-width="1.4"/>
+<polyline points="1740,656 1740,720" fill="none" stroke="#333" stroke-width="1.4" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+<text x="1748" y="686" font-size="12" text-anchor="start" fill="#222">«usa»</text>
+<polyline points="600,924.5 700,924.5" fill="none" stroke="#333" stroke-width="1.4" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+<text x="610" y="918.5" font-size="12" text-anchor="start" fill="#222">«usa»</text>
 </svg>

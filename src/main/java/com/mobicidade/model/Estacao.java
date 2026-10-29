@@ -1,26 +1,30 @@
 package com.mobicidade.model;
 
+import com.mobicidade.exception.RegraDeNegocioException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Estacao {
     private int id;
+    private String nome;
     private double latitude;
     private double longitude;
     private int capacidade;
-    private List<Veiculo> veiculos = new ArrayList<>();
+    private final List<Veiculo> veiculos = new ArrayList<>();
 
     public Estacao() {
     }
 
-    public Estacao(int id, double latitude, double longitude, int capacidade) {
-        this.id = id;
+    public Estacao(String nome, double latitude, double longitude, int capacidade) {
+        this.nome = nome;
         this.latitude = latitude;
         this.longitude = longitude;
         this.capacidade = capacidade;
     }
 
+    // REQ03
     public int veiculosDisponiveis() {
         int total = 0;
         for (Veiculo v : veiculos) {
@@ -31,26 +35,37 @@ public class Estacao {
         return total;
     }
 
+    // REQ03
     public int vagasLivres() {
         return capacidade - veiculos.size();
     }
 
-    public void adicionarVeiculo(Veiculo veiculo) {
+    public boolean temVaga() {
+        return vagasLivres() > 0;
+    }
+
+    public void receberVeiculo(Veiculo veiculo) {
         if (veiculo == null) {
             throw new IllegalArgumentException("O veículo não pode ser nulo.");
         }
+        if (veiculos.contains(veiculo)) {
+            return;
+        }
+        if (!temVaga()) {
+            throw new RegraDeNegocioException("A estação " + id + " não possui vagas livres.");
+        }
+        veiculos.add(veiculo);
+        veiculo.setEstacao(this);
+    }
 
-        boolean jaCadastrado = veiculos.stream()
-                .anyMatch(atual -> atual.getId() == veiculo.getId());
-        if (!jaCadastrado) {
-            this.veiculos.add(veiculo);
+    public void liberarVeiculo(Veiculo veiculo) {
+        if (veiculo != null && veiculos.remove(veiculo)) {
+            veiculo.setEstacao(null);
         }
     }
 
-    public void removerVeiculo(Veiculo veiculo) {
-        if (veiculo != null) {
-            this.veiculos.removeIf(atual -> atual.getId() == veiculo.getId());
-        }
+    public boolean possuiVeiculo(Veiculo veiculo) {
+        return veiculos.contains(veiculo);
     }
 
     public int getId() {
@@ -59,6 +74,14 @@ public class Estacao {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public double getLatitude() {
@@ -87,5 +110,11 @@ public class Estacao {
 
     public List<Veiculo> getVeiculos() {
         return Collections.unmodifiableList(veiculos);
+    }
+
+    @Override
+    public String toString() {
+        return "Estação " + id + " (" + nome + ") [" + veiculosDisponiveis() + " disponíveis, "
+                + vagasLivres() + " vagas livres de " + capacidade + "]";
     }
 }

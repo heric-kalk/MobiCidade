@@ -6,7 +6,12 @@ public class Bicicleta extends Veiculo {
         super();
     }
 
-    public Bicicleta(int id, Estacao estacao) {
-        super(id, estacao);
+    public Bicicleta(Estacao estacao) {
+        super(estacao);
+    }
+
+    @Override
+    public String getTipo() {
+        return "Bicicleta";
     }
 }

@@ -15,7 +15,14 @@ public abstract class Usuario {
         this.formaDePagamento = formaDePagamento;
     }
 
-    public abstract double calcularCusto(double duracao);
+    // REQ16
+    public abstract String getTipo();
+
+    // REQ11
+    public abstract double calcularCusto(int duracaoMinutos);
+
+    public void registrarUso(int duracaoMinutos) {
+    }
 
     public String getNome() {
         return nome;
@@ -39,5 +46,10 @@ public abstract class Usuario {
 
     public void setFormaDePagamento(String formaDePagamento) {
         this.formaDePagamento = formaDePagamento;
+    }
+
+    @Override
+    public String toString() {
+        return getTipo() + " " + nome + " (CPF " + cpf + ", " + formaDePagamento + ")";
     }
 }
