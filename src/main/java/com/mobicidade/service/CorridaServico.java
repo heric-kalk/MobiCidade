@@ -104,7 +104,7 @@ public class CorridaServico extends ServicoInteiroBase<Corrida> implements ICorr
         exigir(origem.veiculosDisponiveis() > 0,
                 "[REQ20] A estação " + origem.getId() + " não possui nenhum veículo disponível.");
 
-        exigir(veiculo.getStatus() == StatusVeiculo.DISPONIVEL,
+        exigir(veiculo.estaDisponivel(),
                 "O veículo " + veiculo.getId() + " não está disponível (" + veiculo.getStatus() + ").");
         exigir(origem.possuiVeiculo(veiculo),
                 "O veículo " + veiculo.getId() + " não está na estação de origem " + origem.getId() + ".");

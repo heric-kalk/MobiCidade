@@ -1,6 +1,5 @@
 package com.mobicidade.service;
 
-import com.mobicidade.exception.ProvedorIndisponivelException;
 import com.mobicidade.model.PrevisaoClimatica;
 
 @FunctionalInterface

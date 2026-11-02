@@ -37,8 +37,9 @@ public abstract class Veiculo {
         return status;
     }
 
-    public void setStatus(StatusVeiculo status) {
-        this.status = status;
+    public void estacionarEm(Estacao destino) {
+        destino.receberVeiculo(this);
+        this.status = StatusVeiculo.DISPONIVEL;
     }
 
     public Estacao getEstacao() {

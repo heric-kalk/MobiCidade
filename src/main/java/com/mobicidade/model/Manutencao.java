@@ -30,8 +30,7 @@ public class Manutencao {
     // REQ14
     public void finalizar(Estacao destino, LocalDateTime fim) {
         this.dataFim = fim;
-        destino.receberVeiculo(veiculo);
-        veiculo.alterarDisponibilidade(StatusVeiculo.DISPONIVEL);
+        veiculo.estacionarEm(destino);
         if (veiculo instanceof Patinete) {
             ((Patinete) veiculo).recarregar();
         }

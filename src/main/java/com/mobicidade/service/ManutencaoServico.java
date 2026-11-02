@@ -3,7 +3,6 @@ package com.mobicidade.service;
 import com.mobicidade.model.Estacao;
 import com.mobicidade.model.Manutencao;
 import com.mobicidade.model.StatusVeiculo;
-import com.mobicidade.model.Veiculo;
 import com.mobicidade.repository.IManutencaoRepositorio;
 
 import java.time.LocalDateTime;

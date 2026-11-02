@@ -111,8 +111,7 @@ public class VeiculoServico extends ServicoInteiroBase<Veiculo> implements IVeic
                 "Apenas veículos deixados em zona livre podem ser recolhidos.");
         Estacao estacao = estacaoServico.buscarPorId(idEstacao);
         exigir(estacao.temVaga(), "A estação não possui vagas livres.");
-        estacao.receberVeiculo(veiculo);
-        veiculo.alterarDisponibilidade(StatusVeiculo.DISPONIVEL);
+        veiculo.estacionarEm(estacao);
         return veiculo;
     }
 }

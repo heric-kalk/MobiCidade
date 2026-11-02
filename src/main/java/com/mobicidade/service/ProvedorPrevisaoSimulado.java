@@ -17,10 +17,6 @@ public class ProvedorPrevisaoSimulado implements IProvedorPrevisaoClimatica {
         this.cenario = cenario;
     }
 
-    public Cenario getCenario() {
-        return cenario;
-    }
-
     @Override
     public PrevisaoClimatica consultar(double latitude, double longitude) {
         LocalDateTime agora = LocalDateTime.now();

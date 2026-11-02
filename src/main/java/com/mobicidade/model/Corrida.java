@@ -47,8 +47,7 @@ public class Corrida {
             ((Patinete) veiculo).consumirBateria(duracao);
         }
         if (destino != null) {
-            destino.receberVeiculo(veiculo);
-            veiculo.alterarDisponibilidade(StatusVeiculo.DISPONIVEL);
+            veiculo.estacionarEm(destino);
         } else {
             veiculo.alterarDisponibilidade(StatusVeiculo.FORA_DE_ESTACAO);
         }
@@ -102,10 +101,6 @@ public class Corrida {
 
     public LocalDateTime getDataHoraFim() {
         return dataHoraFim;
-    }
-
-    public void setDataHoraFim(LocalDateTime dataHoraFim) {
-        this.dataHoraFim = dataHoraFim;
     }
 
     public int getDuracao() {
