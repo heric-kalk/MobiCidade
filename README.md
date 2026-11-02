@@ -6,66 +6,6 @@ Sistema para gestão de uma frota compartilhada de bicicletas e patinetes elétr
 
 Como diferencial, o sistema consulta em tempo real as condições climáticas da cidade via API pública, bloqueando o início de novas corridas quando há previsão de chuva forte ou tempestade, por questão de segurança do usuário.
 
-## Escopo desta implementação inicial
-
-Esta etapa entrega as classes de domínio e seus relacionamentos, CRUDs em memória para Estação, Veículo, Usuário, Corrida e Manutenção, as regras de negócio (REQ01–REQ22) e a separação em camadas com interfaces. **As telas gráficas não foram implementadas**: o arquivo `modelo_navegacional_mobicidade.png` documenta as telas previstas e as transições entre elas. Ao executar o `Main` o sistema carrega dados de exemplo e exibe um painel de texto; há também uma simulação automática dos requisitos (veja "Como executar"). A interface com o usuário será feita em GUI.
-
-Os dados ficam em memória e são perdidos ao encerrar o processo. Persistência em banco e interface gráfica ainda não fazem parte desta implementação inicial.
-
-## Arquitetura
-
-```
-Main / ui (Painel, DadosIniciais, Simulacao)
-        │  só conhece a fachada
-        ▼
-facade   IMobiCidadeFachada ◄── MobiCidadeFachada (raiz de composição)
-        ▼
-service  IServico<T,ID> ◄── ServicoBase ◄── EstacaoServico, VeiculoServico, UsuarioServico,
-         CorridaServico, ManutencaoServico  (+ ClimaServico, RelatorioServico)
-         ← camada única: casos de uso + regras de negócio (antigos Controller + Service)
-        ▼
-repository  IRepositorio<T,ID> ◄── RepositorioMemoria ◄── *RepositorioMemoria
-        ▼
-model    Estacao, Veiculo (Bicicleta/Patinete), Usuario (Comum/Assinante), Corrida,
-         Manutencao, PrevisaoClimatica
-```
-
-- Interfaces começam com `I` (`IRepositorio`, `IEstacaoServico`, `IMobiCidadeFachada`, ...).
-- O **model concentra o comportamento do domínio** (`Estacao.receberVeiculo/liberarVeiculo`, `Corrida.iniciar/finalizar/calcularTarifa`, `Manutencao.registrar/finalizar`, `Usuario.calcularCusto`, `PrevisaoClimatica.verificarAlerta`, `Patinete.consumirBateria`), e os **services decidem se a operação é permitida** (regras e restrições) antes de chamá-lo.
-- Os relacionamentos são bidirecionais e mantidos em sincronia pelo model (Estação ↔ Veículo; Corrida → Usuário/Veículo/Estações; Manutenção → Veículo).
-
-## Como executar
-
-```
-javac -encoding UTF-8 -d out $(find src/main/java -name '*.java')
-java -cp out com.mobicidade.Main               # carrega dados de exemplo e exibe o painel
-java -cp out com.mobicidade.Main --simulacao   # simulação automática REQ01–REQ22 (saída 0 = tudo OK)
-```
-
-## Mapeamento requisito → código
-
-| Requisito | Onde está implementado |
-|---|---|
-| REQ01 | `EstacaoServico.validar`, `Estacao` |
-| REQ02 | `VeiculoServico` (`prepararCadastro`, `validar`, `regrasDeCadastro`, `aposCadastrar`), `Veiculo`, `Bicicleta`, `Patinete` |
-| REQ03 | `EstacaoServico.veiculosDisponiveis/vagasLivres` → `Estacao.veiculosDisponiveis/vagasLivres` |
-| REQ04, REQ05 | `UsuarioServico.validar`, `Usuario`, `UsuarioComum`, `UsuarioAssinante` |
-| REQ06 | `OpenMeteoProvedor` (HttpClient), `ClimaServico.consultar`, `PrevisaoClimatica` |
-| REQ07 | `PrevisaoClimatica.verificarAlerta`, alerta no topo do `Painel` (tela inicial) |
-| REQ08 | cache em `ClimaServico` + `PrevisaoClimatica.comoDesatualizada` |
-| REQ09 | `CorridaServico.iniciar` → `Corrida.iniciar` |
-| REQ10 | `CorridaServico.finalizar` → `Corrida.finalizar` |
-| REQ11 | `Corrida.calcularTarifa`, `Usuario.calcularCusto`, `UsuarioAssinante` (consome minutos do plano) |
-| REQ12 | `Corrida.TAXA_ZONA_LIVRE` (destino nulo = zona livre), `VeiculoServico.recolherParaEstacao` |
-| REQ13 | `ManutencaoServico.registrar` → `Manutencao.registrar` |
-| REQ14 | `ManutencaoServico.concluir` → `Manutencao.finalizar` |
-| REQ15 | `RelatorioServico.corridasPorEstacao`, `corridasPorEstacaoCsv`, `exportarCorridasPorEstacaoCsv` |
-| REQ16 | `RelatorioServico.faturamentoPorTipoUsuario` |
-| REQ17 a REQ20 | `CorridaServico.regrasDeCadastro` (mensagens marcadas `[REQ17]` ... `[REQ20]`) |
-| REQ21, REQ22 | `CorridaServico.finalizar` (mensagens marcadas `[REQ21]`, `[REQ22]`) |
-
-Decisões de implementação: a duração da corrida é arredondada para cima em minutos (qualquer fração iniciada conta), então REQ22 só rejeita término igual ou anterior ao início; o consumo de bateria é de 0,5% por minuto de uso; sem nenhum dado climático (API fora do ar e sem cache) a corrida não é bloqueada, mas o sistema avisa que a previsão está indisponível; um usuário não pode ter duas corridas simultâneas.
-
 ## Requisitos Funcionais
 
 ### 1. Cadastro de Veículos e Estações
