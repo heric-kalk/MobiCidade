@@ -56,7 +56,7 @@ public final class DadosIniciais {
         Veiculo bikeManutencao = veiculo(new Bicicleta(marcoZero));
         Veiculo bikeEmUso = veiculo(new Bicicleta(marcoZero));
 
-        usuarios.salvar(new Administrador("Administrador", "99999999999", "abc", "Não se aplica"));
+        usuarios.salvar(new Administrador("Administrador", "99999999999", "abcdef", "Não se aplica"));
         UsuarioComum ana = new UsuarioComum("Ana Souza", "11111111111", "123456", "Cartão de crédito");
         UsuarioAssinante bruno = new UsuarioAssinante("Bruno Lima", "22222222222", "123456", "Pix", 60);
         UsuarioComum carla = new UsuarioComum("Carla Mendes", "33333333333", "123456", "Pix");
