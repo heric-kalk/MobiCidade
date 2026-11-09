@@ -16,6 +16,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -145,6 +146,9 @@ public class MenuUsuarioController {
 
     @FXML
     private Label perfilPlano;
+
+    @FXML
+    private Button botaoRenovarPlano;
 
     @FXML
     private Label estatisticaCorridas;
@@ -293,7 +297,6 @@ public class MenuUsuarioController {
     private void carregarEstacoesParaCorrida() {
         List<Estacao> estacoes = fachada.listarEstacoes().stream()
                 .filter(estacao -> !estacao.estaBloqueada())
-                .filter(estacao -> !estacao.ehZonaLivre())
                 .toList();
 
         selecaoEstacaoOrigem.setItems(FXCollections.observableArrayList(estacoes));
@@ -370,8 +373,8 @@ public class MenuUsuarioController {
                         + "Início: " + corridaAtual.getDataHoraInicio().format(FORMATO_DATA));
 
         List<Estacao> estacoes = fachada.listarEstacoes().stream()
-                .filter(Estacao::temVaga)
                 .filter(estacao -> !estacao.ehZonaLivre())
+                .filter(Estacao::temVaga)
                 .toList();
 
         selecaoEstacaoDestino.setItems(FXCollections.observableArrayList(estacoes));
@@ -402,13 +405,13 @@ public class MenuUsuarioController {
         Estacao destino = selecaoEstacaoDestino.getValue();
 
         if (destino == null && !zonaLivre.isSelected()) {
-            mensagemMinhaCorrida.setText("Selecione uma estação de destino ou marque a devolução na Zona Livre.");
+            mensagemMinhaCorrida.setText("Selecione uma estação de destino ou marque a devolução em zona livre.");
             return;
         }
 
         try {
             Corrida finalizada = fachada.finalizarCorrida(corridaAtual.getId(),
-                    destino == null ? null : destino.getId());
+                    zonaLivre.isSelected() || destino == null ? null : destino.getId());
 
             mensagemMinhaCorrida.setText("Corrida finalizada com sucesso!\n"
                     + "Duração: " + finalizada.getDuracao() + " minutos\n"
@@ -453,9 +456,13 @@ public class MenuUsuarioController {
                             + "Minutos restantes: " + assinante.minutosRestantes() + "\n"
                             + String.format("Tarifa excedente: R$ %.2f/min",
                                     UsuarioAssinante.TARIFA_EXCEDENTE_POR_MINUTO));
+            botaoRenovarPlano.setVisible(true);
+            botaoRenovarPlano.setManaged(true);
         } else {
             perfilPlano.setText(String.format("Plano comum\nTarifa: R$ %.2f por minuto utilizado.",
                     UsuarioComum.TARIFA_POR_MINUTO));
+            botaoRenovarPlano.setVisible(false);
+            botaoRenovarPlano.setManaged(false);
         }
 
         List<Corrida> corridas = corridasFinalizadasDoUsuario();
@@ -464,6 +471,17 @@ public class MenuUsuarioController {
         estatisticaGastos.setText(moeda(corridas.stream().mapToDouble(Corrida::getTarifa).sum()));
 
         mensagemPerfil.setText("");
+    }
+
+    @FXML
+    private void renovarPlano() {
+        try {
+            usuario = fachada.renovarPlano(usuario.getCpf());
+            carregarPerfil();
+            mensagemPerfil.setText("Plano renovado com sucesso!");
+        } catch (Exception e) {
+            mensagemPerfil.setText("Não foi possível renovar o plano: " + e.getMessage());
+        }
     }
 
     @FXML

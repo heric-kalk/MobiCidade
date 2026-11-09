@@ -117,9 +117,6 @@ public class CorridaServico extends ServicoInteiroBase<Corrida> implements ICorr
         Veiculo veiculo = corrida.getVeiculo();
         Estacao origem = corrida.getEstacaoOrigem();
 
-        exigir(!origem.ehZonaLivre(),
-                "A estação Zona Livre é exclusiva para devolução e recolhimento de veículos.");
-
         exigir(origem.getStatus() != StatusEstacao.BLOQUEADA,
                 "Não é possível iniciar uma corrida: a estação "
                         + origem.getId() + " está bloqueada.");
@@ -131,6 +128,9 @@ public class CorridaServico extends ServicoInteiroBase<Corrida> implements ICorr
         AlertaClimatico alerta = climaServico.consultar(
                 origem.getLatitude(),
                 origem.getLongitude()).verificarAlerta();
+
+        exigir(alerta != AlertaClimatico.SEM_DADOS,
+                "[REQ17] Corrida bloqueada: previsão climática indisponível (sem conexão com a API e sem cache).");
 
         exigir(alerta != AlertaClimatico.ALERTA_CHUVA_FORTE,
                 "[REQ17] Corrida bloqueada: há previsão de chuva forte ou tempestade na região da estação de origem.");
@@ -199,18 +199,9 @@ public class CorridaServico extends ServicoInteiroBase<Corrida> implements ICorr
         exigir(corrida.calcularDuracao(termino) > 0,
                 "[REQ22] A duração da corrida deve ser maior que zero minutos (término deve ser posterior ao início).");
 
-        Estacao destino;
-
-        if (idEstacaoDestino == null) {
-            // A opção de zona livre encaminha o veículo para a estação especial.
-            destino = estacaoServico.listar().stream()
-                    .filter(Estacao::ehZonaLivre)
-                    .findFirst()
-                    .orElseThrow(() -> new IllegalStateException(
-                            "A estação Zona Livre não foi cadastrada nos dados iniciais."));
-        } else {
-            destino = estacaoServico.buscarPorId(idEstacaoDestino);
-        }
+        Estacao destino = idEstacaoDestino != null
+                ? estacaoServico.buscarPorId(idEstacaoDestino)
+                : estacaoServico.obterZonaLivre();
 
         // REQ21 - Estação precisa possuir vaga.
         exigir(destino.temVaga(),

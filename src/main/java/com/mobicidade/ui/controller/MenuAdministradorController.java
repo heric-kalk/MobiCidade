@@ -417,9 +417,18 @@ public class MenuAdministradorController {
     @FXML
     private void bloquearEstacao() {
         Estacao estacao = obterEstacaoSelecionada();
-        if (estacao == null
-                || !confirmar("Confirmar bloqueio", "Bloquear estação?",
-                        "Deseja realmente bloquear a estação " + estacao.getNome() + "?")) {
+        if (estacao == null) {
+            return;
+        }
+
+        if (estacao.ehZonaLivre()) {
+            mostrarMensagem(Alert.AlertType.WARNING, "Atenção", "Operação não permitida",
+                    "A estação Zona Livre não pode ser bloqueada.");
+            return;
+        }
+
+        if (!confirmar("Confirmar bloqueio", "Bloquear estação?",
+                "Deseja realmente bloquear a estação " + estacao.getNome() + "?")) {
             return;
         }
 
@@ -435,9 +444,18 @@ public class MenuAdministradorController {
     @FXML
     private void desbloquearEstacao() {
         Estacao estacao = obterEstacaoSelecionada();
-        if (estacao == null
-                || !confirmar("Confirmar desbloqueio", "Desbloquear estação?",
-                        "Deseja realmente desbloquear a estação " + estacao.getNome() + "?")) {
+        if (estacao == null) {
+            return;
+        }
+
+        if (estacao.ehZonaLivre()) {
+            mostrarMensagem(Alert.AlertType.WARNING, "Atenção", "Operação não permitida",
+                    "A estação Zona Livre não pode ser bloqueada ou desbloqueada.");
+            return;
+        }
+
+        if (!confirmar("Confirmar desbloqueio", "Desbloquear estação?",
+                "Deseja realmente desbloquear a estação " + estacao.getNome() + "?")) {
             return;
         }
 
@@ -478,9 +496,18 @@ public class MenuAdministradorController {
     @FXML
     private void removerEstacao() {
         Estacao estacao = obterEstacaoSelecionada();
-        if (estacao == null
-                || !confirmar("Confirmar remoção", "Remover estação?",
-                        "Deseja realmente remover a estação " + estacao.getNome() + "?")) {
+        if (estacao == null) {
+            return;
+        }
+
+        if (estacao.ehZonaLivre()) {
+            mostrarMensagem(Alert.AlertType.WARNING, "Atenção", "Operação não permitida",
+                    "A estação Zona Livre não pode ser removida.");
+            return;
+        }
+
+        if (!confirmar("Confirmar remoção", "Remover estação?",
+                "Deseja realmente remover a estação " + estacao.getNome() + "?")) {
             return;
         }
 
@@ -503,8 +530,7 @@ public class MenuAdministradorController {
 
     private List<Estacao> estacoesAtivasComVaga() {
         return fachada.listarEstacoes().stream()
-                .filter(estacao -> estacao.temVaga() && !estacao.estaBloqueada())
-                .filter(estacao -> !estacao.ehZonaLivre())
+                .filter(estacao -> !estacao.ehZonaLivre() && estacao.temVaga() && !estacao.estaBloqueada())
                 .toList();
     }
 
@@ -817,7 +843,8 @@ public class MenuAdministradorController {
                 .forEach(c -> agrupadas.computeIfAbsent(c.getUsuario().getNome(), nome -> new ArrayList<>()).add(c));
         agrupadas.values().forEach(lista ->
                 lista.sort(Comparator.comparing(Corrida::getDataHoraInicio).reversed()));
-        return agrupadas;
+        return agrupadas
+                ;
     }
 
     private VBox criarSecaoUsuario(String nome, List<Corrida> corridas) {

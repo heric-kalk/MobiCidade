@@ -71,6 +71,8 @@ public interface IMobiCidadeFachada {
 
         void removerUsuario(String cpf);
 
+        UsuarioAssinante renovarPlano(String cpf);
+
         // REQ06 a REQ08
         PrevisaoClimatica consultarPrevisaoDaCidade();
 

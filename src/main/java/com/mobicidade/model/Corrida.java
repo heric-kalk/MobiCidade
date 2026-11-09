@@ -55,7 +55,7 @@ public class Corrida {
     }
 
     public boolean zonaLivre() {
-        return finalizada() && estacaoDestino != null && estacaoDestino.ehZonaLivre();
+        return finalizada() && (estacaoDestino == null || estacaoDestino.ehZonaLivre());
     }
 
     public int calcularDuracao() {
@@ -72,7 +72,7 @@ public class Corrida {
 
     private double calcularTarifa() {
         double custoBase = usuario != null ? usuario.calcularCusto(calcularDuracao()) : 0.0;
-        double taxaExtra = estacaoDestino != null && estacaoDestino.ehZonaLivre() ? TAXA_ZONA_LIVRE : 0.0;
+        double taxaExtra = (estacaoDestino == null || estacaoDestino.ehZonaLivre()) ? TAXA_ZONA_LIVRE : 0.0;
         return custoBase + taxaExtra;
     }
 

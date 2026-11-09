@@ -29,9 +29,6 @@ public class EstacaoServico extends ServicoInteiroBase<Estacao> implements IEsta
         exigir(estacao.getNome() != null && !estacao.getNome().isBlank(),
                 "O nome da estação é obrigatório.");
 
-        exigir(!Estacao.NOME_ZONA_LIVRE.equalsIgnoreCase(estacao.getNome().trim()),
-                "O nome Zona Livre é reservado para a estação especial do sistema.");
-
         exigir(estacao.getCapacidade() > 0,
                 "A capacidade da estação deve ser maior que zero.");
 
@@ -44,9 +41,6 @@ public class EstacaoServico extends ServicoInteiroBase<Estacao> implements IEsta
 
     @Override
     protected void regrasDeAtualizacao(Estacao existente, Estacao novo) {
-        exigir(!existente.ehZonaLivre(),
-                "A estação Zona Livre é especial e não pode ser alterada.");
-
         exigir(novo.getCapacidade() >= existente.getVeiculos().size(),
                 "A capacidade não pode ser menor que a quantidade de veículos na estação.");
     }
@@ -62,7 +56,7 @@ public class EstacaoServico extends ServicoInteiroBase<Estacao> implements IEsta
     @Override
     protected void regrasDeRemocao(Estacao estacao) {
         exigir(!estacao.ehZonaLivre(),
-                "A estação Zona Livre é obrigatória e não pode ser removida.");
+                "A estação Zona Livre não pode ser removida.");
 
         exigir(estacao.getVeiculos().isEmpty(),
                 "Não é possível remover uma estação que ainda possui veículos.");
@@ -99,5 +93,15 @@ public class EstacaoServico extends ServicoInteiroBase<Estacao> implements IEsta
                 "A estação " + idEstacao + " não está bloqueada.");
 
         estacao.desbloquear();
+    }
+
+    @Override
+    public Estacao obterZonaLivre() {
+        for (Estacao estacao : repositorio.listarTodos()) {
+            if (estacao.ehZonaLivre()) {
+                return estacao;
+            }
+        }
+        return cadastrar(new Estacao(Estacao.NOME_ZONA_LIVRE, -8.0476, -34.8770, 100));
     }
 }

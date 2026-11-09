@@ -101,9 +101,10 @@ public class VeiculoServico extends ServicoInteiroBase<Veiculo> implements IVeic
     public Veiculo recolherParaEstacao(int idVeiculo, int idEstacao) {
         Veiculo veiculo = buscarPorId(idVeiculo);
         exigir(veiculo.getStatus() == StatusVeiculo.FORA_DE_ESTACAO
-                        || (veiculo.getEstacao() != null && veiculo.getEstacao().ehZonaLivre()),
-                "Apenas veículos deixados na Zona Livre podem ser recolhidos.");
+                || (veiculo.getEstacao() != null && veiculo.getEstacao().ehZonaLivre()),
+                "Apenas veículos deixados em zona livre podem ser recolhidos.");
         Estacao estacao = estacaoServico.buscarPorId(idEstacao);
+        exigir(!estacao.ehZonaLivre(), "Escolha uma estação válida para recolher o veículo.");
         exigir(estacao.temVaga(), "A estação não possui vagas livres.");
         veiculo.estacionarEm(estacao);
         return veiculo;

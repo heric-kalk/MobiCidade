@@ -50,7 +50,7 @@ public final class AlertaClima {
         } else if (previsao.temDados()) {
             estilo = ESTILO_NORMAL;
         } else {
-            estilo = ESTILO_AVISO;
+            estilo = ESTILO_ALERTA;
         }
 
         if (previsao.temDados()) {
@@ -63,7 +63,7 @@ public final class AlertaClima {
                 }
             }
         } else {
-            texto.append("Clima: previsão indisponível (sem conexão com a API e sem cache).");
+            texto.append("Clima: previsão indisponível (sem conexão com a API e sem cache). Novas corridas estão bloqueadas.");
         }
 
         rotulo.setText(texto.toString());

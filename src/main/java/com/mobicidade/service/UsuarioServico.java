@@ -95,4 +95,16 @@ public class UsuarioServico extends ServicoBase<Usuario, String> implements IUsu
             return null;
         }
     }
+
+    @Override
+    public UsuarioAssinante renovarPlano(String cpf) {
+        Usuario usuario = buscarPorId(cpf);
+
+        exigir(usuario instanceof UsuarioAssinante,
+                "Apenas usuários assinantes possuem plano para renovar.");
+
+        UsuarioAssinante assinante = (UsuarioAssinante) usuario;
+        assinante.renovarPlano();
+        return assinante;
+    }
 }

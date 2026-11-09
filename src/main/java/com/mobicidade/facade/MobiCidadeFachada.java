@@ -208,6 +208,11 @@ public class MobiCidadeFachada implements IMobiCidadeFachada {
     }
 
     @Override
+    public UsuarioAssinante renovarPlano(String cpf) {
+        return usuarioServico.renovarPlano(cpf);
+    }
+
+    @Override
     public PrevisaoClimatica consultarPrevisaoDaCidade() {
         return climaServico.consultar(LATITUDE_CIDADE, LONGITUDE_CIDADE);
     }

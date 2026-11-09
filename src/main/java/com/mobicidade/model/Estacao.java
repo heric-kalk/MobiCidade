@@ -26,6 +26,10 @@ public class Estacao {
         this.capacidade = capacidade;
     }
 
+    public boolean ehZonaLivre() {
+        return NOME_ZONA_LIVRE.equalsIgnoreCase(nome);
+    }
+
     // REQ03
     public int veiculosDisponiveis() {
         int total = 0;
@@ -90,10 +94,6 @@ public class Estacao {
 
     public boolean estaBloqueada() {
         return status == StatusEstacao.BLOQUEADA;
-    }
-
-    public boolean ehZonaLivre() {
-        return NOME_ZONA_LIVRE.equalsIgnoreCase(nome);
     }
 
     public StatusEstacao getStatus() {

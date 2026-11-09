@@ -175,7 +175,7 @@
                                                 </VBox>
 
                                                 <CheckBox fx:id="zonaLivre"
-                                                        text="Devolver na estação Zona Livre (taxa extra)"
+                                                        text="Devolver fora de uma estação (zona livre, taxa extra)"
                                                         onAction="#alternarZonaLivre" />
 
                                                 <Button text="Finalizar corrida"
@@ -304,6 +304,14 @@
                                                         <Label fx:id="perfilPlano"
                                                                 wrapText="true"
                                                                 styleClass="information-text" />
+
+                                                        <Button fx:id="botaoRenovarPlano"
+                                                                text="Renovar plano"
+                                                                onAction="#renovarPlano"
+                                                                maxWidth="Infinity"
+                                                                visible="false"
+                                                                managed="false"
+                                                                styleClass="button-primary" />
                                                 </VBox>
 
                                                 <VBox spacing="14" styleClass="content-card">

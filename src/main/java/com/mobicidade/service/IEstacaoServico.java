@@ -12,4 +12,6 @@ public interface IEstacaoServico extends IServico<Estacao, Integer> {
     void bloquearEstacao(int idEstacao);
 
     void desbloquearEstacao(int idEstacao);
+
+    Estacao obterZonaLivre();
 }

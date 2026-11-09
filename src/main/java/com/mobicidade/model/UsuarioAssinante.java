@@ -33,6 +33,11 @@ public class UsuarioAssinante extends Usuario {
         minutosConsumidos += duracaoMinutos;
     }
 
+    public void renovarPlano() {
+        minutosConsumidos = 0;
+        
+    }
+
     public int getMinutosInclusos() {
         return minutosInclusos;
     }
