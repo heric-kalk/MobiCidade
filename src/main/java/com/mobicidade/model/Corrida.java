@@ -4,7 +4,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class Corrida {
-
     // REQ12
     public static final double TAXA_ZONA_LIVRE = 5.0;
 
@@ -20,12 +19,6 @@ public class Corrida {
     private Estacao estacaoDestino;
 
     public Corrida() {
-    }
-
-    public Corrida(Usuario usuario, Veiculo veiculo, Estacao estacaoOrigem) {
-        this.usuario = usuario;
-        this.veiculo = veiculo;
-        this.estacaoOrigem = estacaoOrigem;
     }
 
     // REQ09
@@ -62,7 +55,7 @@ public class Corrida {
     }
 
     public boolean zonaLivre() {
-        return finalizada() && estacaoDestino == null;
+        return finalizada() && estacaoDestino != null && estacaoDestino.ehZonaLivre();
     }
 
     public int calcularDuracao() {
@@ -77,9 +70,9 @@ public class Corrida {
         return (int) ((nanos + 60_000_000_000L - 1) / 60_000_000_000L);
     }
 
-    public double calcularTarifa() {
+    private double calcularTarifa() {
         double custoBase = usuario != null ? usuario.calcularCusto(calcularDuracao()) : 0.0;
-        double taxaExtra = estacaoDestino == null ? TAXA_ZONA_LIVRE : 0.0;
+        double taxaExtra = estacaoDestino != null && estacaoDestino.ehZonaLivre() ? TAXA_ZONA_LIVRE : 0.0;
         return custoBase + taxaExtra;
     }
 

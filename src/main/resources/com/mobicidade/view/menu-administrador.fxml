@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.mobicidade.ui.controller.MenuAdministradorController"
+        prefWidth="1000"
+        prefHeight="650"
+        style="-fx-background-color: #f4f6f9;
+               -fx-text-fill: #1e293b;
+               -fx-font-family: 'Arial';">
+
+        <top>
+                <Label text="MobiCidade | Administração"
+                        maxWidth="Infinity"
+                        style="-fx-background-color: #e2e8f0;
+                       -fx-text-fill: #1e293b;
+                       -fx-font-size: 22px;
+                       -fx-font-weight: bold;">
+                        <padding>
+                                <Insets top="20" right="20" bottom="20" left="20" />
+                        </padding>
+                </Label>
+        </top>
+
+        <left>
+                <ScrollPane fitToWidth="true"
+                        fitToHeight="false"
+                        hbarPolicy="NEVER"
+                        vbarPolicy="AS_NEEDED"
+                        prefWidth="245"
+                        style="-fx-background-color: #ffffff;
+                       -fx-background: #ffffff;">
+
+                        <content>
+                                <VBox spacing="12"
+                                        prefWidth="230"
+                                        style="-fx-background-color: #ffffff;">
+
+                                        <padding>
+                                                <Insets top="25" right="15" bottom="25" left="15" />
+                                        </padding>
+
+                                        <Label text="MENU"
+                                                style="-fx-font-size: 13px;
+                                   -fx-font-weight: bold;
+                                   -fx-text-fill: #334155;" />
+
+                                        <Button text="Visão geral"
+                                                onAction="#mostrarInicio"
+                                                maxWidth="Infinity"
+                                                style="-fx-text-fill: #1e293b;" />
+
+                                        <Label text="ESTAÇÕES"
+                                                style="-fx-font-size: 13px;
+                                   -fx-font-weight: bold;
+                                   -fx-text-fill: #334155;" />
+
+                                        <Button text="Registrar estação"
+                                                onAction="#mostrarRegistroEstacao"
+                                                maxWidth="Infinity"
+                                                style="-fx-text-fill: #1e293b;" />
+
+                                        <Button text="Bloquear estação"
+                                                onAction="#mostrarBloqueioEstacao"
+                                                maxWidth="Infinity"
+                                                style="-fx-text-fill: #1e293b;" />
+
+                                        <Label text="VEÍCULOS"
+                                                style="-fx-font-size: 13px;
+                                   -fx-font-weight: bold;
+                                   -fx-text-fill: #334155;" />
+
+                                        <Button text="Cadastrar veículo"
+                                                onAction="#mostrarCadastroVeiculo"
+                                                maxWidth="Infinity"
+                                                style="-fx-text-fill: #1e293b;" />
+
+                                        <Button text="Gerenciar veículos"
+                                                onAction="#mostrarVeiculos"
+                                                maxWidth="Infinity"
+                                                style="-fx-text-fill: #1e293b;" />
+
+                                        <Label text="MANUTENÇÕES"
+                                                style="-fx-font-size: 13px;
+                                   -fx-font-weight: bold;
+                                   -fx-text-fill: #334155;" />
+
+                                        <Button text="Listar manutenções"
+                                                onAction="#mostrarManutencoes"
+                                                maxWidth="Infinity"
+                                                style="-fx-text-fill: #1e293b;" />
+
+                                        <Button text="Registrar manutenção"
+                                                onAction="#mostrarRegistroManutencao"
+                                                maxWidth="Infinity"
+                                                style="-fx-text-fill: #1e293b;" />
+
+                                        <Button text="Finalizar manutenção"
+                                                onAction="#mostrarFinalizacaoManutencao"
+                                                maxWidth="Infinity"
+                                                style="-fx-text-fill: #1e293b;" />
+
+                                        <Label text="RELATÓRIOS"
+                                                style="-fx-font-size: 13px;
+                                   -fx-font-weight: bold;
+                                   -fx-text-fill: #334155;" />
+
+                                        <Button text="Relatórios"
+                                                onAction="#mostrarRelatorios"
+                                                maxWidth="Infinity"
+                                                style="-fx-text-fill: #1e293b;" />
+
+                                        <VBox VBox.vgrow="ALWAYS" />
+
+                                        <Button text="Voltar ao login"
+                                                onAction="#voltarLogin"
+                                                maxWidth="Infinity"
+                                                style="-fx-background-color: #e2e8f0;
+                                   -fx-text-fill: #1e293b;
+                                   -fx-font-weight: bold;" />
+
+                                </VBox>
+                        </content>
+                </ScrollPane>
+        </left>
+
+        <center>
+                <ScrollPane fitToWidth="true"
+                        fitToHeight="false"
+                        hbarPolicy="NEVER"
+                        vbarPolicy="AS_NEEDED"
+                        style="-fx-background-color: transparent;
+                       -fx-background: transparent;">
+
+                        <content>
+                                <VBox alignment="TOP_CENTER"
+                                        spacing="15"
+                                        maxWidth="Infinity">
+
+                                        <padding>
+                                                <Insets top="40" right="40" bottom="40" left="40" />
+                                        </padding>
+
+                                        <Label fx:id="tituloConteudo"
+                                                text="Painel do Administrador"
+                                                style="-fx-font-size: 28px;
+                                   -fx-font-weight: bold;
+                                   -fx-text-fill: #1e293b;" />
+
+                                        <Label fx:id="descricaoConteudo"
+                                                text="Selecione uma opção no menu lateral."
+                                                wrapText="true"
+                                                style="-fx-font-size: 16px;
+                                   -fx-text-fill: #475569;" />
+
+                                        <Label fx:id="alertaClima"
+                                                wrapText="true"
+                                                maxWidth="Infinity"
+                                                visible="false"
+                                                managed="false" />
+
+                                        <TableView fx:id="tabelaEstacoes"
+                                                prefHeight="400"
+                                                maxWidth="Infinity"
+                                                visible="false"
+                                                managed="false"
+                                                style="-fx-text-background-color: #1e293b;
+                                   -fx-control-inner-background: #ffffff;
+                                   -fx-control-inner-background-alt: #f1f5f9;">
+
+                                                <columns>
+                                                        <TableColumn fx:id="colunaId" text="ID"
+                                                                prefWidth="45" />
+                                                        <TableColumn fx:id="colunaNome" text="Nome"
+                                                                prefWidth="130" />
+                                                        <TableColumn fx:id="colunaLatitude"
+                                                                text="Latitude" prefWidth="85" />
+                                                        <TableColumn fx:id="colunaLongitude"
+                                                                text="Longitude" prefWidth="90" />
+                                                        <TableColumn fx:id="colunaCapacidade"
+                                                                text="Capacidade" prefWidth="80" />
+                                                        <TableColumn fx:id="colunaVeiculos"
+                                                                text="Veículos" prefWidth="75" />
+                                                        <TableColumn fx:id="colunaVagas"
+                                                                text="Vagas livres" prefWidth="85" />
+                                                        <TableColumn fx:id="colunaStatus"
+                                                                text="Status" prefWidth="100" />
+                                                </columns>
+                                        </TableView>
+
+                                        <TableView fx:id="tabelaVeiculos"
+                                                prefHeight="400"
+                                                maxWidth="Infinity"
+                                                visible="false"
+                                                managed="false"
+                                                style="-fx-text-background-color: #1e293b;
+                                   -fx-control-inner-background: #ffffff;
+                                   -fx-control-inner-background-alt: #f1f5f9;">
+
+                                                <columns>
+                                                        <TableColumn fx:id="colunaIdVeiculo"
+                                                                text="ID" prefWidth="55" />
+                                                        <TableColumn fx:id="colunaTipoVeiculo"
+                                                                text="Tipo" prefWidth="110" />
+                                                        <TableColumn fx:id="colunaStatusVeiculo"
+                                                                text="Status" prefWidth="120" />
+                                                        <TableColumn fx:id="colunaEstacaoVeiculo"
+                                                                text="Estação" prefWidth="150" />
+                                                        <TableColumn fx:id="colunaBateriaVeiculo"
+                                                                text="Bateria" prefWidth="90" />
+                                                </columns>
+                                        </TableView>
+
+                                        <VBox fx:id="acoesRecolherVeiculo"
+                                                spacing="10"
+                                                maxWidth="Infinity"
+                                                visible="false"
+                                                managed="false">
+
+                                                <ComboBox fx:id="selecaoEstacaoRecolhimento"
+                                                        promptText="Estação para recolher veículo em zona livre"
+                                                        maxWidth="Infinity" />
+
+                                                <Button text="Recolher veículo selecionado para a estação"
+                                                        onAction="#recolherVeiculo"
+                                                        maxWidth="Infinity"
+                                                        style="-fx-background-color: #bbf7d0;
+                                       -fx-text-fill: #166534;
+                                       -fx-font-weight: bold;" />
+                                        </VBox>
+
+                                        <Button fx:id="botaoRemoverVeiculo"
+                                                text="Remover veículo selecionado"
+                                                onAction="#removerVeiculo"
+                                                maxWidth="Infinity"
+                                                visible="false"
+                                                managed="false"
+                                                style="-fx-background-color: #fecaca;
+                                   -fx-text-fill: #991b1b;
+                                   -fx-font-weight: bold;" />
+
+                                        <VBox fx:id="acoesBloqueioEstacao"
+                                                spacing="10"
+                                                maxWidth="Infinity"
+                                                visible="false"
+                                                managed="false">
+
+                                                <Button text="Bloquear estação selecionada"
+                                                        onAction="#bloquearEstacao"
+                                                        maxWidth="Infinity"
+                                                        style="-fx-background-color: #fecaca;
+                                       -fx-text-fill: #991b1b;
+                                       -fx-font-weight: bold;" />
+
+                                                <Button text="Desbloquear estação selecionada"
+                                                        onAction="#desbloquearEstacao"
+                                                        maxWidth="Infinity"
+                                                        style="-fx-background-color: #bbf7d0;
+                                       -fx-text-fill: #166534;
+                                       -fx-font-weight: bold;" />
+                                        </VBox>
+
+                                        <Button fx:id="botaoRemoverEstacao"
+                                                text="Remover estação selecionada"
+                                                onAction="#removerEstacao"
+                                                maxWidth="Infinity"
+                                                visible="false"
+                                                managed="false"
+                                                style="-fx-background-color: #fecaca;
+                                   -fx-text-fill: #991b1b;
+                                   -fx-font-weight: bold;" />
+
+                                        <VBox fx:id="formularioEstacao"
+                                                spacing="12"
+                                                maxWidth="400"
+                                                visible="false"
+                                                managed="false">
+
+                                                <Label text="Nome da estação"
+                                                        style="-fx-text-fill: #1e293b;" />
+                                                <TextField fx:id="campoNomeEstacao"
+                                                        promptText="Ex.: Estação Boa Viagem"
+                                                        style="-fx-text-fill: #1e293b;
+                                       -fx-prompt-text-fill: #64748b;
+                                       -fx-background-color: #ffffff;" />
+
+                                                <Label text="Latitude"
+                                                        style="-fx-text-fill: #1e293b;" />
+                                                <TextField fx:id="campoLatitude"
+                                                        promptText="Ex.: -8.1264"
+                                                        style="-fx-text-fill: #1e293b;
+                                       -fx-prompt-text-fill: #64748b;
+                                       -fx-background-color: #ffffff;" />
+
+                                                <Label text="Longitude"
+                                                        style="-fx-text-fill: #1e293b;" />
+                                                <TextField fx:id="campoLongitude"
+                                                        promptText="Ex.: -34.9013"
+                                                        style="-fx-text-fill: #1e293b;
+                                       -fx-prompt-text-fill: #64748b;
+                                       -fx-background-color: #ffffff;" />
+
+                                                <Label text="Capacidade"
+                                                        style="-fx-text-fill: #1e293b;" />
+                                                <TextField fx:id="campoCapacidade"
+                                                        promptText="Ex.: 20"
+                                                        style="-fx-text-fill: #1e293b;
+                                       -fx-prompt-text-fill: #64748b;
+                                       -fx-background-color: #ffffff;" />
+
+                                                <Button text="Cadastrar estação"
+                                                        onAction="#cadastrarEstacao"
+                                                        maxWidth="Infinity"
+                                                        style="-fx-text-fill: #1e293b;" />
+
+                                                <Label fx:id="mensagemEstacao"
+                                                        wrapText="true"
+                                                        style="-fx-text-fill: #1e293b;" />
+                                        </VBox>
+
+                                        <VBox fx:id="formularioVeiculo"
+                                                spacing="12"
+                                                maxWidth="400"
+                                                visible="false"
+                                                managed="false">
+
+                                                <Label text="Tipo de veículo"
+                                                        style="-fx-text-fill: #1e293b;" />
+
+                                                <ComboBox fx:id="selecaoTipoVeiculo"
+                                                        promptText="Selecione o tipo"
+                                                        maxWidth="Infinity"
+                                                        style="-fx-text-fill: #1e293b;
+                                       -fx-background-color: #ffffff;" />
+
+                                                <Label text="Estação de destino"
+                                                        style="-fx-text-fill: #1e293b;" />
+
+                                                <ComboBox fx:id="selecaoEstacaoVeiculo"
+                                                        promptText="Selecione uma estação com vagas"
+                                                        maxWidth="Infinity"
+                                                        style="-fx-text-fill: #1e293b;
+                                       -fx-background-color: #ffffff;" />
+
+                                                <VBox fx:id="campoBateriaContainer"
+                                                        spacing="8"
+                                                        visible="false"
+                                                        managed="false">
+
+                                                        <Label text="Bateria inicial (%)"
+                                                                style="-fx-text-fill: #1e293b;" />
+
+                                                        <TextField fx:id="campoBateriaVeiculo"
+                                                                promptText="Ex.: 100"
+                                                                style="-fx-text-fill: #1e293b;
+                                           -fx-prompt-text-fill: #64748b;
+                                           -fx-background-color: #ffffff;" />
+                                                </VBox>
+
+                                                <Button text="Cadastrar veículo"
+                                                        onAction="#cadastrarVeiculo"
+                                                        maxWidth="Infinity"
+                                                        style="-fx-text-fill: #1e293b;" />
+
+                                                <Label fx:id="mensagemVeiculo"
+                                                        wrapText="true"
+                                                        style="-fx-text-fill: #1e293b;" />
+                                        </VBox>
+
+                                        <TableView fx:id="tabelaManutencoes"
+                                                prefHeight="400"
+                                                maxWidth="Infinity"
+                                                visible="false"
+                                                managed="false"
+                                                style="-fx-text-background-color: #1e293b;
+                                   -fx-control-inner-background: #ffffff;
+                                   -fx-control-inner-background-alt: #f1f5f9;">
+
+                                                <columns>
+                                                        <TableColumn fx:id="colunaIdManutencao"
+                                                                text="ID" prefWidth="45" />
+                                                        <TableColumn fx:id="colunaVeiculoManutencao"
+                                                                text="Veículo" prefWidth="110" />
+                                                        <TableColumn
+                                                                fx:id="colunaDescricaoManutencao"
+                                                                text="Descrição" prefWidth="150" />
+                                                        <TableColumn fx:id="colunaInicioManutencao"
+                                                                text="Início" prefWidth="120" />
+                                                        <TableColumn fx:id="colunaFimManutencao"
+                                                                text="Término" prefWidth="120" />
+                                                        <TableColumn fx:id="colunaStatusManutencao"
+                                                                text="Situação" prefWidth="110" />
+                                                </columns>
+                                        </TableView>
+
+                                        <VBox fx:id="formularioManutencao"
+                                                spacing="12"
+                                                maxWidth="400"
+                                                visible="false"
+                                                managed="false">
+
+                                                <Label text="Selecione o veículo"
+                                                        style="-fx-text-fill: #1e293b;" />
+
+                                                <ComboBox fx:id="selecaoVeiculoManutencao"
+                                                        promptText="Escolha um veículo"
+                                                        maxWidth="Infinity"
+                                                        style="-fx-text-fill: #1e293b;
+                                       -fx-background-color: #ffffff;" />
+
+                                                <Label text="Descrição da manutenção"
+                                                        style="-fx-text-fill: #1e293b;" />
+
+                                                <TextField fx:id="campoDescricaoManutencao"
+                                                        promptText="Ex.: Problema no freio"
+                                                        style="-fx-text-fill: #1e293b;
+                                       -fx-prompt-text-fill: #64748b;
+                                       -fx-background-color: #ffffff;" />
+
+                                                <Button text="Registrar manutenção"
+                                                        onAction="#registrarManutencao"
+                                                        maxWidth="Infinity"
+                                                        style="-fx-text-fill: #1e293b;" />
+
+                                                <Label fx:id="mensagemManutencao"
+                                                        wrapText="true"
+                                                        style="-fx-text-fill: #1e293b;" />
+                                        </VBox>
+
+                                        <VBox fx:id="formularioFinalizacaoManutencao"
+                                                spacing="12"
+                                                maxWidth="400"
+                                                visible="false"
+                                                managed="false">
+
+                                                <Label text="Selecione a manutenção"
+                                                        style="-fx-text-fill: #1e293b;" />
+
+                                                <ComboBox fx:id="selecaoManutencao"
+                                                        promptText="Escolha uma manutenção"
+                                                        maxWidth="Infinity"
+                                                        style="-fx-text-fill: #1e293b;
+                                       -fx-background-color: #ffffff;" />
+
+                                                <Label text="Selecione a estação de destino"
+                                                        style="-fx-text-fill: #1e293b;" />
+
+                                                <ComboBox fx:id="selecaoEstacaoDestino"
+                                                        promptText="Escolha uma estação com vagas"
+                                                        maxWidth="Infinity"
+                                                        style="-fx-text-fill: #1e293b;
+                                       -fx-background-color: #ffffff;" />
+
+                                                <Button text="Finalizar manutenção"
+                                                        onAction="#finalizarManutencao"
+                                                        maxWidth="Infinity"
+                                                        style="-fx-text-fill: #1e293b;" />
+
+                                                <Label fx:id="mensagemFinalizacaoManutencao"
+                                                        wrapText="true"
+                                                        style="-fx-text-fill: #1e293b;" />
+                                        </VBox>
+
+                                        <VBox fx:id="painelRelatorios"
+                                                spacing="15"
+                                                maxWidth="Infinity"
+                                                visible="false"
+                                                managed="false">
+
+                                                <Label text="Relatório de corridas finalizadas"
+                                                        style="-fx-font-size: 22px;
+                   -fx-font-weight: bold;
+                   -fx-text-fill: #1e293b;" />
+
+                                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                                        <ComboBox fx:id="filtroEstacaoRelatorio"
+                                                                promptText="Estação (origem ou destino)"
+                                                                prefWidth="260" />
+                                                        <DatePicker fx:id="filtroDeRelatorio"
+                                                                promptText="De" />
+                                                        <DatePicker fx:id="filtroAteRelatorio"
+                                                                promptText="Até" />
+                                                </HBox>
+
+                                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                                        <Button text="Consultar"
+                                                                onAction="#atualizarRelatorios"
+                                                                style="-fx-text-fill: #1e293b;" />
+                                                        <Button text="Limpar filtros"
+                                                                onAction="#limparFiltrosRelatorio"
+                                                                style="-fx-text-fill: #1e293b;" />
+                                                        <Button text="Exportar CSV"
+                                                                onAction="#exportarRelatorioCsv"
+                                                                style="-fx-text-fill: #1e293b;
+                                       -fx-font-weight: bold;" />
+                                                </HBox>
+
+                                                <VBox spacing="10"
+                                                        style="-fx-background-color: #e2e8f0;
+                   -fx-background-radius: 8;
+                   -fx-padding: 18;">
+
+                                                        <Label text="Resumo geral"
+                                                                style="-fx-font-size: 17px;
+                       -fx-font-weight: bold;
+                       -fx-text-fill: #1e293b;" />
+
+                                                        <Label fx:id="totalCorridasRelatorio"
+                                                                text="Total de corridas: 0"
+                                                                style="-fx-font-size: 16px;
+                       -fx-text-fill: #1e293b;" />
+
+                                                        <Label fx:id="faturamentoComumRelatorio"
+                                                                text="Faturamento Comum: R$ 0,00"
+                                                                style="-fx-font-size: 15px;
+                       -fx-text-fill: #1e293b;" />
+
+                                                        <Label fx:id="faturamentoAssinanteRelatorio"
+                                                                text="Faturamento Assinante: R$ 0,00"
+                                                                style="-fx-font-size: 15px;
+                       -fx-text-fill: #1e293b;" />
+
+                                                        <Label fx:id="totalArrecadadoRelatorio"
+                                                                text="Total arrecadado: R$ 0,00"
+                                                                style="-fx-font-size: 16px;
+                       -fx-font-weight: bold;
+                       -fx-text-fill: #166534;" />
+                                                </VBox>
+
+                                                <Label text="Corridas por usuário"
+                                                        style="-fx-font-size: 18px;
+                   -fx-font-weight: bold;
+                   -fx-text-fill: #1e293b;" />
+
+                                                <ScrollPane fitToWidth="true"
+                                                        prefHeight="450"
+                                                        maxHeight="600"
+                                                        hbarPolicy="NEVER"
+                                                        vbarPolicy="AS_NEEDED"
+                                                        style="-fx-background-color: transparent;
+                   -fx-background: transparent;">
+
+                                                        <content>
+                                                                <VBox
+                                                                        fx:id="listaCorridasPorUsuario"
+                                                                        spacing="15"
+                                                                        maxWidth="Infinity"
+                                                                        style="-fx-padding: 5;" />
+                                                        </content>
+                                                </ScrollPane>
+
+                                                <Label fx:id="mensagemRelatorios"
+                                                        wrapText="true"
+                                                        style="-fx-text-fill: #1e293b;" />
+
+                                        </VBox>
+
+                                </VBox>
+                        </content>
+                </ScrollPane>
+        </center>
+
+</BorderPane>

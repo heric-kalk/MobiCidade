@@ -1,14 +1,9 @@
 package com.mobicidade.model;
 
 public class Patinete extends Veiculo {
-
     public static final double CONSUMO_BATERIA_POR_MINUTO = 0.5;
 
     private double bateria;
-
-    public Patinete() {
-        super();
-    }
 
     public Patinete(Estacao estacao, double bateria) {
         super(estacao);

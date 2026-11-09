@@ -7,7 +7,6 @@ import com.mobicidade.model.Veiculo;
 import com.mobicidade.repository.IVeiculoRepositorio;
 
 public class VeiculoServico extends ServicoInteiroBase<Veiculo> implements IVeiculoServico {
-
     private final IEstacaoServico estacaoServico;
 
     public VeiculoServico(IVeiculoRepositorio repositorio, IEstacaoServico estacaoServico) {
@@ -84,7 +83,11 @@ public class VeiculoServico extends ServicoInteiroBase<Veiculo> implements IVeic
 
     @Override
     protected void regrasDeRemocao(Veiculo veiculo) {
-        exigir(veiculo.getStatus() != StatusVeiculo.EM_USO, "Não é possível remover um veículo em uso.");
+        exigir(veiculo.getStatus() != StatusVeiculo.EM_USO,
+                "Não é possível remover um veículo em uso.");
+
+        exigir(veiculo.getStatus() != StatusVeiculo.MANUTENCAO,
+                "Não é possível remover um veículo em manutenção.");
     }
 
     @Override
@@ -95,20 +98,11 @@ public class VeiculoServico extends ServicoInteiroBase<Veiculo> implements IVeic
     }
 
     @Override
-    public Patinete recarregarPatinete(int idVeiculo) {
-        Veiculo veiculo = buscarPorId(idVeiculo);
-        exigir(veiculo instanceof Patinete, "Apenas patinetes possuem bateria.");
-        exigir(veiculo.getStatus() != StatusVeiculo.EM_USO, "Não é possível recarregar um patinete em uso.");
-        Patinete patinete = (Patinete) veiculo;
-        patinete.recarregar();
-        return patinete;
-    }
-
-    @Override
     public Veiculo recolherParaEstacao(int idVeiculo, int idEstacao) {
         Veiculo veiculo = buscarPorId(idVeiculo);
-        exigir(veiculo.getStatus() == StatusVeiculo.FORA_DE_ESTACAO,
-                "Apenas veículos deixados em zona livre podem ser recolhidos.");
+        exigir(veiculo.getStatus() == StatusVeiculo.FORA_DE_ESTACAO
+                        || (veiculo.getEstacao() != null && veiculo.getEstacao().ehZonaLivre()),
+                "Apenas veículos deixados na Zona Livre podem ser recolhidos.");
         Estacao estacao = estacaoServico.buscarPorId(idEstacao);
         exigir(estacao.temVaga(), "A estação não possui vagas livres.");
         veiculo.estacionarEm(estacao);

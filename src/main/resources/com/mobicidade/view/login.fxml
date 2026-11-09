@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+       xmlns:fx="http://javafx.com/fxml"
+       fx:controller="com.mobicidade.ui.controller.LoginController"
+       alignment="CENTER"
+       spacing="15"
+       prefWidth="1000"
+       prefHeight="650"
+       style="-fx-background-color: #f4f6f9;">
+
+       <padding>
+              <Insets top="40" right="40" bottom="40" left="40" />
+       </padding>
+
+       <Label text="MobiCidade"
+              style="-fx-font-size: 32px; -fx-font-weight: bold;" />
+
+       <Label text="Mobilidade urbana inteligente"
+              style="-fx-font-size: 15px; -fx-text-fill: #666666;" />
+
+       <VBox spacing="10" maxWidth="320">
+
+              <Label text="CPF" />
+
+              <TextField fx:id="campoCpf"
+                     promptText="Digite seu CPF"
+                     maxWidth="320" />
+
+              <Label text="Senha" />
+
+              <PasswordField fx:id="campoSenha"
+                     promptText="Digite sua senha" />
+
+              <Button text="Entrar"
+                     onAction="#entrar"
+                     maxWidth="Infinity"
+                     style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-font-weight: bold;" />
+
+              <Button text="Criar conta"
+                     onAction="#abrirCadastro"
+                     maxWidth="Infinity"
+                     style="-fx-background-color: transparent; -fx-text-fill: #2563eb; -fx-font-weight: bold;" />
+
+       </VBox>
+
+       <Label fx:id="mensagem"
+              text=""
+              style="-fx-text-fill: #dc2626;" />
+
+</VBox>

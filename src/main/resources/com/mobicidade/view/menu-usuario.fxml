@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.mobicidade.ui.controller.MenuUsuarioController"
+        prefWidth="1100"
+        prefHeight="700"
+        minWidth="650"
+        minHeight="450"
+        styleClass="app-root"
+        stylesheets="@../css/usuario.css">
+
+        <left>
+                <VBox spacing="12"
+                        prefWidth="220"
+                        minWidth="180"
+                        styleClass="sidebar">
+
+                        <padding>
+                                <Insets top="30" right="16" bottom="25" left="16" />
+                        </padding>
+
+                        <Label text="MobiCidade" styleClass="brand-title" />
+                        <Label text="ÁREA DO USUÁRIO" styleClass="sidebar-caption" />
+
+                        <VBox spacing="8">
+                                <Button text="Início"
+                                        onAction="#mostrarInicio"
+                                        maxWidth="Infinity"
+                                        styleClass="menu-button" />
+
+                                <Button text="Estações"
+                                        onAction="#mostrarEstacoes"
+                                        maxWidth="Infinity"
+                                        styleClass="menu-button" />
+
+                                <Button text="Iniciar corrida"
+                                        onAction="#mostrarIniciarCorrida"
+                                        maxWidth="Infinity"
+                                        styleClass="menu-button" />
+
+                                <Button text="Minha corrida"
+                                        onAction="#mostrarMinhaCorrida"
+                                        maxWidth="Infinity"
+                                        styleClass="menu-button" />
+
+                                <Button text="Histórico"
+                                        onAction="#mostrarHistorico"
+                                        maxWidth="Infinity"
+                                        styleClass="menu-button" />
+
+                                <Button text="Meu perfil"
+                                        onAction="#mostrarPerfil"
+                                        maxWidth="Infinity"
+                                        styleClass="menu-button" />
+                        </VBox>
+
+                        <VBox VBox.vgrow="ALWAYS" />
+
+                        <Label text="MobiCidade • 2026"
+                                styleClass="sidebar-footer" />
+
+                        <Button text="Voltar ao login"
+                                onAction="#voltarLogin"
+                                maxWidth="Infinity"
+                                styleClass="menu-button" />
+                </VBox>
+        </left>
+
+        <center>
+                <ScrollPane fitToWidth="true"
+                        hbarPolicy="NEVER"
+                        vbarPolicy="AS_NEEDED"
+                        styleClass="content-scroll">
+
+                        <content>
+                                <VBox spacing="22"
+                                        fillWidth="true"
+                                        styleClass="content-area">
+
+                                        <padding>
+                                                <Insets top="35" right="35" bottom="35" left="35" />
+                                        </padding>
+
+                                        <VBox spacing="7">
+                                                <Label fx:id="tituloConteudo"
+                                                        text="Bem-vindo ao MobiCidade"
+                                                        styleClass="page-title" />
+
+                                                <Label fx:id="descricaoConteudo"
+                                                        text="Gerencie suas viagens e acompanhe os serviços disponíveis."
+                                                        wrapText="true"
+                                                        styleClass="page-description" />
+                                        </VBox>
+
+                                        <Label fx:id="alertaClima"
+                                                wrapText="true"
+                                                maxWidth="Infinity"
+                                                managed="false"
+                                                visible="false" />
+
+                                        <VBox fx:id="formularioCorrida"
+                                                spacing="14"
+                                                maxWidth="600"
+                                                visible="false"
+                                                managed="false"
+                                                styleClass="content-card">
+
+                                                <Label text="Nova corrida"
+                                                        styleClass="section-title" />
+
+                                                <VBox spacing="7">
+                                                        <Label text="Estação de origem"
+                                                                styleClass="field-label" />
+
+                                                        <ComboBox fx:id="selecaoEstacaoOrigem"
+                                                                promptText="Selecione uma estação"
+                                                                maxWidth="Infinity"
+                                                                onAction="#atualizarVeiculosDisponiveis" />
+                                                </VBox>
+
+                                                <VBox spacing="7">
+                                                        <Label text="Veículo disponível"
+                                                                styleClass="field-label" />
+
+                                                        <ComboBox fx:id="selecaoVeiculo"
+                                                                promptText="Selecione um veículo"
+                                                                maxWidth="Infinity" />
+                                                </VBox>
+
+                                                <Button text="Iniciar corrida"
+                                                        onAction="#iniciarCorrida"
+                                                        maxWidth="Infinity"
+                                                        styleClass="button-success" />
+
+                                                <Label fx:id="mensagemCorrida"
+                                                        wrapText="true"
+                                                        styleClass="feedback-label" />
+                                        </VBox>
+
+                                        <VBox fx:id="painelMinhaCorrida"
+                                                spacing="15"
+                                                maxWidth="650"
+                                                visible="false"
+                                                managed="false"
+                                                styleClass="content-card">
+
+                                                <Label text="Corrida em andamento"
+                                                        styleClass="section-title" />
+
+                                                <Label fx:id="detalhesMinhaCorrida"
+                                                        wrapText="true"
+                                                        styleClass="information-text" />
+
+                                                <VBox spacing="7">
+                                                        <Label text="Estação de destino"
+                                                                styleClass="field-label" />
+
+                                                        <ComboBox fx:id="selecaoEstacaoDestino"
+                                                                promptText="Selecione uma estação"
+                                                                maxWidth="Infinity" />
+                                                </VBox>
+
+                                                <CheckBox fx:id="zonaLivre"
+                                                        text="Devolver na estação Zona Livre (taxa extra)"
+                                                        onAction="#alternarZonaLivre" />
+
+                                                <Button text="Finalizar corrida"
+                                                        onAction="#finalizarCorrida"
+                                                        maxWidth="Infinity"
+                                                        styleClass="button-danger" />
+
+                                                <Label fx:id="mensagemMinhaCorrida"
+                                                        wrapText="true"
+                                                        styleClass="feedback-label" />
+                                        </VBox>
+
+                                        <VBox fx:id="painelHistorico"
+                                                spacing="14"
+                                                visible="false"
+                                                managed="false"
+                                                VBox.vgrow="ALWAYS"
+                                                styleClass="content-card">
+
+                                                <Label text="Suas viagens anteriores"
+                                                        styleClass="section-title" />
+
+                                                <TableView fx:id="tabelaHistorico"
+                                                        prefHeight="400"
+                                                        minHeight="250"
+                                                        VBox.vgrow="ALWAYS"
+                                                        styleClass="data-table">
+
+                                                        <placeholder>
+                                                                <Label
+                                                                        text="Você ainda não possui corridas finalizadas."
+                                                                        styleClass="empty-message" />
+                                                        </placeholder>
+
+                                                        <columns>
+                                                                <TableColumn
+                                                                        fx:id="colunaHistoricoId"
+                                                                        text="ID" prefWidth="55" />
+
+                                                                <TableColumn
+                                                                        fx:id="colunaHistoricoVeiculo"
+                                                                        text="Veículo"
+                                                                        prefWidth="110" />
+
+                                                                <TableColumn
+                                                                        fx:id="colunaHistoricoOrigem"
+                                                                        text="Origem"
+                                                                        prefWidth="120" />
+
+                                                                <TableColumn
+                                                                        fx:id="colunaHistoricoDestino"
+                                                                        text="Destino"
+                                                                        prefWidth="120" />
+
+                                                                <TableColumn
+                                                                        fx:id="colunaHistoricoDuracao"
+                                                                        text="Duração"
+                                                                        prefWidth="85" />
+
+                                                                <TableColumn
+                                                                        fx:id="colunaHistoricoTarifa"
+                                                                        text="Tarifa" prefWidth="95" />
+
+                                                                <TableColumn
+                                                                        fx:id="colunaHistoricoData"
+                                                                        text="Data" prefWidth="140" />
+                                                        </columns>
+                                                </TableView>
+                                        </VBox>
+
+                                        <VBox fx:id="painelPerfil"
+                                                spacing="16"
+                                                visible="false"
+                                                managed="false"
+                                                VBox.vgrow="ALWAYS">
+
+                                                <VBox spacing="14" styleClass="content-card">
+                                                        <Label text="Informações pessoais"
+                                                                styleClass="section-title" />
+
+                                                        <VBox spacing="5">
+                                                                <Label text="CPF"
+                                                                        styleClass="field-label" />
+                                                                <Label fx:id="perfilCpf"
+                                                                        styleClass="profile-value" />
+                                                        </VBox>
+
+                                                        <VBox spacing="5">
+                                                                <Label text="Tipo de conta"
+                                                                        styleClass="field-label" />
+                                                                <Label fx:id="perfilTipo"
+                                                                        styleClass="profile-value" />
+                                                        </VBox>
+
+                                                        <VBox spacing="7">
+                                                                <Label text="Nome"
+                                                                        styleClass="field-label" />
+                                                                <TextField fx:id="campoNome"
+                                                                        promptText="Digite seu nome"
+                                                                        maxWidth="Infinity" />
+                                                        </VBox>
+
+                                                        <VBox spacing="7">
+                                                                <Label text="Forma de pagamento"
+                                                                        styleClass="field-label" />
+                                                                <TextField
+                                                                        fx:id="campoFormaPagamento"
+                                                                        promptText="Ex.: Cartão de crédito, Pix"
+                                                                        maxWidth="Infinity" />
+                                                        </VBox>
+
+                                                        <Button text="Salvar alterações"
+                                                                onAction="#salvarPerfil"
+                                                                maxWidth="Infinity"
+                                                                styleClass="button-primary" />
+
+                                                        <Label fx:id="mensagemPerfil"
+                                                                wrapText="true"
+                                                                styleClass="feedback-label" />
+                                                </VBox>
+
+                                                <VBox spacing="12" styleClass="content-card">
+                                                        <Label text="Informações do plano"
+                                                                styleClass="section-title" />
+
+                                                        <Label fx:id="perfilPlano"
+                                                                wrapText="true"
+                                                                styleClass="information-text" />
+                                                </VBox>
+
+                                                <VBox spacing="14" styleClass="content-card">
+                                                        <Label text="Estatísticas de utilização"
+                                                                styleClass="section-title" />
+
+                                                        <HBox spacing="12">
+                                                                <VBox spacing="8"
+                                                                        HBox.hgrow="ALWAYS"
+                                                                        styleClass="stat-card">
+
+                                                                        <Label text="Corridas"
+                                                                                styleClass="stat-caption" />
+
+                                                                        <Label
+                                                                                fx:id="estatisticaCorridas"
+                                                                                text="0"
+                                                                                styleClass="stat-value" />
+                                                                </VBox>
+
+                                                                <VBox spacing="8"
+                                                                        HBox.hgrow="ALWAYS"
+                                                                        styleClass="stat-card">
+
+                                                                        <Label
+                                                                                text="Tempo utilizado"
+                                                                                styleClass="stat-caption" />
+
+                                                                        <Label
+                                                                                fx:id="estatisticaMinutos"
+                                                                                text="0 min"
+                                                                                styleClass="stat-value" />
+                                                                </VBox>
+
+                                                                <VBox spacing="8"
+                                                                        HBox.hgrow="ALWAYS"
+                                                                        styleClass="stat-card">
+
+                                                                        <Label text="Total gasto"
+                                                                                styleClass="stat-caption" />
+
+                                                                        <Label
+                                                                                fx:id="estatisticaGastos"
+                                                                                text="R$ 0,00"
+                                                                                styleClass="stat-value" />
+                                                                </VBox>
+                                                        </HBox>
+                                                </VBox>
+                                        </VBox>
+
+                                        <VBox fx:id="painelEstacoes"
+                                                spacing="12"
+                                                visible="false"
+                                                managed="false"
+                                                VBox.vgrow="ALWAYS">
+
+                                                <Label fx:id="mensagemEstacoes"
+                                                        wrapText="true"
+                                                        styleClass="feedback-label" />
+
+                                                <TableView fx:id="tabelaEstacoes"
+                                                        prefHeight="450"
+                                                        minHeight="250"
+                                                        VBox.vgrow="ALWAYS"
+                                                        styleClass="data-table">
+
+                                                        <placeholder>
+                                                                <Label
+                                                                        text="Nenhuma estação cadastrada."
+                                                                        styleClass="empty-message" />
+                                                        </placeholder>
+
+                                                        <columns>
+                                                                <TableColumn fx:id="colunaId"
+                                                                        text="ID" prefWidth="50" />
+
+                                                                <TableColumn fx:id="colunaNome"
+                                                                        text="Nome" prefWidth="130" />
+
+                                                                <TableColumn fx:id="colunaLatitude"
+                                                                        text="Latitude"
+                                                                        prefWidth="90" />
+
+                                                                <TableColumn fx:id="colunaLongitude"
+                                                                        text="Longitude"
+                                                                        prefWidth="90" />
+
+                                                                <TableColumn
+                                                                        fx:id="colunaCapacidade"
+                                                                        text="Capacidade"
+                                                                        prefWidth="90" />
+
+                                                                <TableColumn
+                                                                        fx:id="colunaDisponiveis"
+                                                                        text="Disponíveis"
+                                                                        prefWidth="95" />
+
+                                                                <TableColumn fx:id="colunaVagas"
+                                                                        text="Vagas" prefWidth="70" />
+
+                                                                <TableColumn fx:id="colunaStatus"
+                                                                        text="Status" prefWidth="90" />
+                                                        </columns>
+                                                </TableView>
+                                        </VBox>
+
+                                </VBox>
+                        </content>
+                </ScrollPane>
+        </center>
+</BorderPane>

@@ -1,15 +1,10 @@
 package com.mobicidade.model;
 
 public class UsuarioComum extends Usuario {
-
     public static final double TARIFA_POR_MINUTO = 0.80;
 
-    public UsuarioComum() {
-        super();
-    }
-
-    public UsuarioComum(String nome, String cpf, String formaDePagamento) {
-        super(nome, cpf, formaDePagamento);
+    public UsuarioComum(String nome, String cpf, String senha, String formaDePagamento) {
+        super(nome, cpf, senha, formaDePagamento);
     }
 
     @Override

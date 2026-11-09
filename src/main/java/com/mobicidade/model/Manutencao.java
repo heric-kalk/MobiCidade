@@ -3,15 +3,11 @@ package com.mobicidade.model;
 import java.time.LocalDateTime;
 
 public class Manutencao {
-
     private int id;
     private String descricao;
     private LocalDateTime dataInicio;
     private LocalDateTime dataFim;
     private Veiculo veiculo;
-
-    public Manutencao() {
-    }
 
     public Manutencao(String descricao, Veiculo veiculo) {
         this.descricao = descricao;

@@ -14,7 +14,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 public final class Painel {
-
     private static final DateTimeFormatter HORA = DateTimeFormatter.ofPattern("dd/MM HH:mm");
 
     private Painel() {

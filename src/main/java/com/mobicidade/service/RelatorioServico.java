@@ -15,7 +15,6 @@ import java.util.Locale;
 import java.util.Map;
 
 public class RelatorioServico implements IRelatorioServico {
-
     private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     private final ICorridaServico corridaServico;

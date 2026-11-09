@@ -1,14 +1,9 @@
 package com.mobicidade.model;
 
 public abstract class Veiculo {
-
     private int id;
     private StatusVeiculo status;
     private Estacao estacao;
-
-    protected Veiculo() {
-        this.status = StatusVeiculo.DISPONIVEL;
-    }
 
     protected Veiculo(Estacao estacao) {
         this.estacao = estacao;

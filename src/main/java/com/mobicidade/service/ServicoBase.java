@@ -7,7 +7,6 @@ import com.mobicidade.repository.IRepositorio;
 import java.util.List;
 
 public abstract class ServicoBase<T, ID> implements IServico<T, ID> {
-
     protected final IRepositorio<T, ID> repositorio;
 
     protected ServicoBase(IRepositorio<T, ID> repositorio) {

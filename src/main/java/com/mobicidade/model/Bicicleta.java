@@ -1,11 +1,6 @@
 package com.mobicidade.model;
 
 public class Bicicleta extends Veiculo {
-
-    public Bicicleta() {
-        super();
-    }
-
     public Bicicleta(Estacao estacao) {
         super(estacao);
     }

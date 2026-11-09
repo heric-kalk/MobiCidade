@@ -5,9 +5,9 @@ import com.mobicidade.model.Usuario;
 import com.mobicidade.model.UsuarioAssinante;
 import com.mobicidade.repository.ICorridaRepositorio;
 import com.mobicidade.repository.IUsuarioRepositorio;
+import com.mobicidade.exception.EntidadeNaoEncontradaException;
 
 public class UsuarioServico extends ServicoBase<Usuario, String> implements IUsuarioServico {
-
     private final ICorridaRepositorio corridaRepositorio;
 
     public UsuarioServico(IUsuarioRepositorio repositorio, ICorridaRepositorio corridaRepositorio) {
@@ -25,14 +25,20 @@ public class UsuarioServico extends ServicoBase<Usuario, String> implements IUsu
         return "Usuário";
     }
 
-    // REQ04, REQ05
     @Override
     protected void validar(Usuario usuario) {
-        exigir(usuario.getNome() != null && !usuario.getNome().isBlank(), "O nome do usuário é obrigatório.");
+        exigir(usuario.getNome() != null && !usuario.getNome().isBlank(),
+                "O nome do usuário é obrigatório.");
+
         exigir(usuario.getCpf() != null && usuario.getCpf().matches("\\d{11}"),
                 "O CPF deve conter exatamente 11 dígitos numéricos.");
+
+        exigir(usuario.getSenha() != null && !usuario.getSenha().isBlank(),
+                "A senha é obrigatória.");
+
         exigir(usuario.getFormaDePagamento() != null && !usuario.getFormaDePagamento().isBlank(),
                 "A forma de pagamento é obrigatória.");
+
         if (usuario instanceof UsuarioAssinante) {
             exigir(((UsuarioAssinante) usuario).getMinutosInclusos() >= 0,
                     "Os minutos inclusos do plano não podem ser negativos.");
@@ -40,17 +46,26 @@ public class UsuarioServico extends ServicoBase<Usuario, String> implements IUsu
     }
 
     @Override
+    protected void regrasDeCadastro(Usuario usuario) {
+        exigir(!repositorio.existe(usuario.getCpf()),
+                "Já existe uma conta cadastrada com esse CPF.");
+    }
+
+    @Override
     protected void regrasDeAtualizacao(Usuario existente, Usuario novo) {
         exigir(existente.getClass() == novo.getClass(),
-                "Não é possível trocar o tipo do usuário (Comum/Assinante) por atualização.");
+                "Não é possível trocar o tipo do usuário por atualização.");
     }
 
     @Override
     protected void copiarCampos(Usuario existente, Usuario novo) {
         existente.setNome(novo.getNome());
+        existente.setSenha(novo.getSenha());
         existente.setFormaDePagamento(novo.getFormaDePagamento());
+
         if (existente instanceof UsuarioAssinante) {
-            ((UsuarioAssinante) existente).setMinutosInclusos(((UsuarioAssinante) novo).getMinutosInclusos());
+            ((UsuarioAssinante) existente).setMinutosInclusos(
+                    ((UsuarioAssinante) novo).getMinutosInclusos());
         }
     }
 
@@ -59,6 +74,25 @@ public class UsuarioServico extends ServicoBase<Usuario, String> implements IUsu
         for (Corrida corrida : corridaRepositorio.listarTodos()) {
             exigir(!(corrida.emAndamento() && corrida.getUsuario() == usuario),
                     "Não é possível remover um usuário com corrida em andamento.");
+        }
+    }
+
+    @Override
+    public Usuario autenticar(String cpf, String senha) {
+        if (cpf == null || senha == null) {
+            return null;
+        }
+
+        try {
+            Usuario usuario = buscarPorId(cpf);
+
+            if (!senha.equals(usuario.getSenha())) {
+                return null;
+            }
+
+            return usuario;
+        } catch (EntidadeNaoEncontradaException e) {
+            return null;
         }
     }
 }

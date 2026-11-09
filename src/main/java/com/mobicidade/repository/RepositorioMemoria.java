@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Optional;
 
 public abstract class RepositorioMemoria<T, ID> implements IRepositorio<T, ID> {
-
     private final Map<ID, T> armazenamento = new LinkedHashMap<>();
 
     protected abstract ID obterId(T entidade);

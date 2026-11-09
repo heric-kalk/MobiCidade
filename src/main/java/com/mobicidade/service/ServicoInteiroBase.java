@@ -3,7 +3,6 @@ package com.mobicidade.service;
 import com.mobicidade.repository.IRepositorio;
 
 public abstract class ServicoInteiroBase<T> extends ServicoBase<T, Integer> {
-
     private int sequencia = 0;
 
     protected ServicoInteiroBase(IRepositorio<T, Integer> repositorio) {

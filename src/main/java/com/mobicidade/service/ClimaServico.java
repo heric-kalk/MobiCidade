@@ -3,12 +3,9 @@ package com.mobicidade.service;
 import com.mobicidade.exception.ProvedorIndisponivelException;
 import com.mobicidade.model.PrevisaoClimatica;
 
-import java.util.Optional;
-
 public class ClimaServico implements IClimaServico {
-
     private final IProvedorPrevisaoClimatica provedor;
-    private PrevisaoClimatica cache;
+    private volatile PrevisaoClimatica cache;
 
     public ClimaServico(IProvedorPrevisaoClimatica provedor) {
         this.provedor = provedor;
@@ -22,12 +19,7 @@ public class ClimaServico implements IClimaServico {
             return atual;
         } catch (ProvedorIndisponivelException e) {
             // REQ08
-            return cache != null ? cache.comoDesatualizada() : PrevisaoClimatica.semDados(latitude, longitude);
+            return cache != null ? cache.comoDesatualizada() : PrevisaoClimatica.semDados();
         }
-    }
-
-    @Override
-    public Optional<PrevisaoClimatica> ultimaConsulta() {
-        return Optional.ofNullable(cache);
     }
 }

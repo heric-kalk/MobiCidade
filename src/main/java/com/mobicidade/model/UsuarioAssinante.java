@@ -1,18 +1,15 @@
 package com.mobicidade.model;
 
 public class UsuarioAssinante extends Usuario {
-
     public static final double TARIFA_EXCEDENTE_POR_MINUTO = 0.50;
+    public static final int MINUTOS_PLANO_PADRAO = 500;
 
     private int minutosInclusos;
     private int minutosConsumidos;
 
-    public UsuarioAssinante() {
-        super();
-    }
-
-    public UsuarioAssinante(String nome, String cpf, String formaDePagamento, int minutosInclusos) {
-        super(nome, cpf, formaDePagamento);
+    public UsuarioAssinante(String nome, String cpf, String senha,
+                            String formaDePagamento, int minutosInclusos) {
+        super(nome, cpf, senha, formaDePagamento);
         this.minutosInclusos = minutosInclusos;
     }
 
@@ -25,7 +22,6 @@ public class UsuarioAssinante extends Usuario {
         return Math.max(0, minutosInclusos - minutosConsumidos);
     }
 
-    // REQ11
     @Override
     public double calcularCusto(int duracaoMinutos) {
         int excedente = Math.max(0, duracaoMinutos - minutosRestantes());
@@ -35,10 +31,6 @@ public class UsuarioAssinante extends Usuario {
     @Override
     public void registrarUso(int duracaoMinutos) {
         minutosConsumidos += duracaoMinutos;
-    }
-
-    public void renovarPlano() {
-        minutosConsumidos = 0;
     }
 
     public int getMinutosInclusos() {
@@ -55,6 +47,7 @@ public class UsuarioAssinante extends Usuario {
 
     @Override
     public String toString() {
-        return super.toString() + " [plano: " + minutosRestantes() + "/" + minutosInclusos + " min restantes]";
+        return super.toString() + " [plano: " + minutosRestantes()
+                + "/" + minutosInclusos + " min restantes]";
     }
 }

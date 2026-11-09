@@ -7,29 +7,23 @@ import java.util.List;
 
 // REQ06
 public class PrevisaoClimatica {
-
     private static final int[] CODIGOS_CHUVA_FORTE = {65, 67, 82, 95, 96, 99};
     public static final double LIMIAR_CHUVA_FORTE_MM_H = 7.6;
 
     private final LocalDateTime ultimaConsulta;
-    private final double latitude;
-    private final double longitude;
     private final List<Integer> codigosTempo;
     private final List<Double> precipitacaoMmPorHora;
     private boolean desatualizada;
 
-    public PrevisaoClimatica(LocalDateTime ultimaConsulta, double latitude, double longitude,
-                             List<Integer> codigosTempo, List<Double> precipitacaoMmPorHora) {
+    public PrevisaoClimatica(LocalDateTime ultimaConsulta, List<Integer> codigosTempo,
+                             List<Double> precipitacaoMmPorHora) {
         this.ultimaConsulta = ultimaConsulta;
-        this.latitude = latitude;
-        this.longitude = longitude;
         this.codigosTempo = new ArrayList<>(codigosTempo);
         this.precipitacaoMmPorHora = new ArrayList<>(precipitacaoMmPorHora);
     }
 
-    public static PrevisaoClimatica semDados(double latitude, double longitude) {
-        return new PrevisaoClimatica(null, latitude, longitude, Collections.<Integer>emptyList(),
-                Collections.<Double>emptyList());
+    public static PrevisaoClimatica semDados() {
+        return new PrevisaoClimatica(null, Collections.<Integer>emptyList(), Collections.<Double>emptyList());
     }
 
     public boolean temDados() {
@@ -69,7 +63,7 @@ public class PrevisaoClimatica {
                 agora, Math.max(0, codigosTempo.size() - 1), maxMm, desatualizada ? " (dados desatualizados)" : "");
     }
 
-    static String descreverCodigo(int codigo) {
+    private static String descreverCodigo(int codigo) {
         if (codigo == 0) return "céu limpo";
         if (codigo <= 3) return "parcialmente nublado";
         if (codigo <= 48) return "nevoeiro/nublado";
@@ -85,8 +79,7 @@ public class PrevisaoClimatica {
 
     // REQ08
     public PrevisaoClimatica comoDesatualizada() {
-        PrevisaoClimatica copia = new PrevisaoClimatica(ultimaConsulta, latitude, longitude,
-                codigosTempo, precipitacaoMmPorHora);
+        PrevisaoClimatica copia = new PrevisaoClimatica(ultimaConsulta, codigosTempo, precipitacaoMmPorHora);
         copia.desatualizada = true;
         return copia;
     }
@@ -97,21 +90,5 @@ public class PrevisaoClimatica {
 
     public LocalDateTime getUltimaConsulta() {
         return ultimaConsulta;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public List<Integer> getCodigosTempo() {
-        return Collections.unmodifiableList(codigosTempo);
-    }
-
-    public List<Double> getPrecipitacaoMmPorHora() {
-        return Collections.unmodifiableList(precipitacaoMmPorHora);
     }
 }

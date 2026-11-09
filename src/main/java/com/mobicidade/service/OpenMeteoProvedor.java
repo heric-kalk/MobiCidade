@@ -18,7 +18,6 @@ import java.util.regex.Pattern;
 
 // REQ06
 public class OpenMeteoProvedor implements IProvedorPrevisaoClimatica {
-
     private static final String URL_BASE = "https://api.open-meteo.com/v1/forecast";
     private static final int HORAS_A_FRENTE = 6;
 
@@ -48,7 +47,7 @@ public class OpenMeteoProvedor implements IProvedorPrevisaoClimatica {
             if (resposta.statusCode() != 200) {
                 throw new ProvedorIndisponivelException("Open-Meteo respondeu HTTP " + resposta.statusCode() + ".");
             }
-            return interpretar(resposta.body(), latitude, longitude);
+            return interpretar(resposta.body());
         } catch (IOException e) {
             throw new ProvedorIndisponivelException("Falha ao consultar a Open-Meteo: " + e.getMessage(), e);
         } catch (InterruptedException e) {
@@ -57,7 +56,7 @@ public class OpenMeteoProvedor implements IProvedorPrevisaoClimatica {
         }
     }
 
-    PrevisaoClimatica interpretar(String json, double latitude, double longitude) {
+    private PrevisaoClimatica interpretar(String json) {
         List<Integer> codigos = new ArrayList<>();
         List<Double> precipitacoes = new ArrayList<>();
 
@@ -84,7 +83,7 @@ public class OpenMeteoProvedor implements IProvedorPrevisaoClimatica {
         if (codigos.isEmpty() && precipitacoes.isEmpty()) {
             throw new ProvedorIndisponivelException("Resposta da Open-Meteo sem dados de previsão.");
         }
-        return new PrevisaoClimatica(LocalDateTime.now(), latitude, longitude, codigos, precipitacoes);
+        return new PrevisaoClimatica(LocalDateTime.now(), codigos, precipitacoes);
     }
 
     private static Integer primeiroNumero(String bloco, String campo) {
