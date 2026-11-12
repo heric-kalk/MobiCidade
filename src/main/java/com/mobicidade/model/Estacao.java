@@ -15,6 +15,7 @@ public class Estacao {
     private double longitude;
     private int capacidade;
 
+
     private final List<Veiculo> veiculos = new ArrayList<>();
 
     private StatusEstacao status = StatusEstacao.ATIVA;
@@ -23,6 +24,11 @@ public class Estacao {
         this.nome = nome;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.capacidade = capacidade;
+    }
+
+    public Estacao(String nome, int capacidade) {
+        this.nome = nome;
         this.capacidade = capacidade;
     }
 
