@@ -1,11 +1,19 @@
 package com.mobicidade.service;
 
 import com.mobicidade.model.Estacao;
+import com.mobicidade.repository.ICorridaRepositorio;
 import com.mobicidade.repository.IEstacaoRepositorio;
 
 public class EstacaoServico extends ServicoInteiroBase<Estacao> implements IEstacaoServico {
+    private final ICorridaRepositorio corridaRepositorio;
+
     public EstacaoServico(IEstacaoRepositorio repositorio) {
+        this(repositorio, null);
+    }
+
+    public EstacaoServico(IEstacaoRepositorio repositorio, ICorridaRepositorio corridaRepositorio) {
         super(repositorio);
+        this.corridaRepositorio = corridaRepositorio;
     }
 
     @Override
@@ -28,6 +36,10 @@ public class EstacaoServico extends ServicoInteiroBase<Estacao> implements IEsta
     protected void validar(Estacao estacao) {
         exigir(estacao.getNome() != null && !estacao.getNome().isBlank(),
                 "O nome da estação é obrigatório.");
+        estacao.setNome(estacao.getNome().trim());
+
+        exigir(!Estacao.NOME_ZONA_LIVRE.equalsIgnoreCase(estacao.getNome()),
+                "O nome Zona Livre é reservado para a estação especial do sistema.");
 
         exigir(estacao.getCapacidade() > 0,
                 "A capacidade da estação deve ser maior que zero.");
@@ -40,7 +52,22 @@ public class EstacaoServico extends ServicoInteiroBase<Estacao> implements IEsta
     }
 
     @Override
+    protected void regrasDeCadastro(Estacao estacao) {
+        exigir(repositorio.listarTodos().stream()
+                        .noneMatch(existente -> nomesIguais(existente.getNome(), estacao.getNome())),
+                "Já existe uma estação cadastrada com esse nome.");
+    }
+
+    @Override
     protected void regrasDeAtualizacao(Estacao existente, Estacao novo) {
+        exigir(!existente.ehZonaLivre(),
+                "A estação Zona Livre é especial e não pode ser alterada.");
+
+        exigir(repositorio.listarTodos().stream()
+                        .filter(outra -> outra.getId() != existente.getId())
+                        .noneMatch(outra -> nomesIguais(outra.getNome(), novo.getNome())),
+                "Já existe outra estação cadastrada com esse nome.");
+
         exigir(novo.getCapacidade() >= existente.getVeiculos().size(),
                 "A capacidade não pode ser menor que a quantidade de veículos na estação.");
     }
@@ -60,6 +87,13 @@ public class EstacaoServico extends ServicoInteiroBase<Estacao> implements IEsta
 
         exigir(estacao.getVeiculos().isEmpty(),
                 "Não é possível remover uma estação que ainda possui veículos.");
+
+        boolean possuiHistorico = corridaRepositorio != null
+                && corridaRepositorio.listarTodos().stream().anyMatch(corrida ->
+                        mesmaEstacao(corrida.getEstacaoOrigem(), estacao)
+                                || mesmaEstacao(corrida.getEstacaoDestino(), estacao));
+        exigir(!possuiHistorico,
+                "Não é possível remover uma estação vinculada ao histórico de corridas.");
     }
 
     @Override
@@ -102,6 +136,26 @@ public class EstacaoServico extends ServicoInteiroBase<Estacao> implements IEsta
                 return estacao;
             }
         }
-        return cadastrar(new Estacao(Estacao.NOME_ZONA_LIVRE, -8.0476, -34.8770, 100));
+
+        // A estação especial é criada internamente; o cadastro público reserva esse nome.
+        Estacao zonaLivre = new Estacao(Estacao.NOME_ZONA_LIVRE, -8.0476, -34.8770, 100);
+        zonaLivre.setId(proximoIdDisponivel());
+        return repositorio.salvar(zonaLivre);
+    }
+
+    private int proximoIdDisponivel() {
+        int id = 1;
+        while (repositorio.existe(id)) {
+            id++;
+        }
+        return id;
+    }
+
+    private boolean nomesIguais(String a, String b) {
+        return a != null && b != null && a.trim().equalsIgnoreCase(b.trim());
+    }
+
+    private boolean mesmaEstacao(Estacao a, Estacao b) {
+        return a != null && b != null && a.getId() == b.getId();
     }
 }

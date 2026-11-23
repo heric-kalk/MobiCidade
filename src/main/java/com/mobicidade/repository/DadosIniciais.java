@@ -10,6 +10,7 @@ import com.mobicidade.model.Usuario;
 import com.mobicidade.model.UsuarioAssinante;
 import com.mobicidade.model.UsuarioComum;
 import com.mobicidade.model.Veiculo;
+import com.mobicidade.security.SenhaUtil;
 
 import java.time.LocalDateTime;
 
@@ -43,7 +44,7 @@ public final class DadosIniciais {
         Estacao derby = estacao(2, "Derby", -8.0560, -34.8990, 4);
         Estacao marcoZero = estacao(3, "Marco Zero", -8.0630, -34.8710, 5);
         estacao(4, "Universidade Federal Rural", -8.0150, -34.9490, 3);
-        Estacao zonaLivre = estacao(5, Estacao.NOME_ZONA_LIVRE, 100);
+        Estacao zonaLivre = estacao(5, Estacao.NOME_ZONA_LIVRE, 0, 0, 100);
 
         Veiculo bike1 = veiculo(new Bicicleta(boaViagem));
         veiculo(new Bicicleta(boaViagem));
@@ -55,10 +56,10 @@ public final class DadosIniciais {
         Veiculo bikeManutencao = veiculo(new Bicicleta(marcoZero));
         Veiculo bikeEmUso = veiculo(new Bicicleta(marcoZero));
 
-        usuarios.salvar(new Administrador("Administrador", "99999999999", "abcdef", "Não se aplica"));
-        UsuarioComum ana = new UsuarioComum("Ana Souza", "11111111111", "123456", "Cartão de crédito");
-        UsuarioAssinante bruno = new UsuarioAssinante("Bruno Lima", "22222222222", "123456", "Pix", 60);
-        UsuarioComum carla = new UsuarioComum("Carla Mendes", "33333333333", "123456", "Pix");
+        usuarios.salvar(new Administrador("Administrador", "99999999999", SenhaUtil.gerarHash("abcdef"), "Não se aplica"));
+        UsuarioComum ana = new UsuarioComum("Ana Souza", "11111111111", SenhaUtil.gerarHash("123456"), "Cartão de crédito");
+        UsuarioAssinante bruno = new UsuarioAssinante("Bruno Lima", "22222222222", SenhaUtil.gerarHash("123456"), "Pix", 60);
+        UsuarioComum carla = new UsuarioComum("Carla Mendes", "33333333333", SenhaUtil.gerarHash("123456"), "Pix");
         usuarios.salvar(ana);
         usuarios.salvar(bruno);
         usuarios.salvar(carla);
@@ -82,12 +83,6 @@ public final class DadosIniciais {
 
     private Estacao estacao(int id, String nome, double latitude, double longitude, int capacidade) {
         Estacao estacao = new Estacao(nome, latitude, longitude, capacidade);
-        estacao.setId(id);
-        return estacoes.salvar(estacao);
-    }
-
-    private Estacao estacao(int id, String nome, int capacidade) {
-        Estacao estacao = new Estacao(nome, capacidade);
         estacao.setId(id);
         return estacoes.salvar(estacao);
     }

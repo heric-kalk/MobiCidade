@@ -1,5 +1,6 @@
 package com.mobicidade.service;
 
+import com.mobicidade.model.Administrador;
 import com.mobicidade.model.AlertaClimatico;
 import com.mobicidade.model.Corrida;
 import com.mobicidade.model.Estacao;
@@ -117,6 +118,9 @@ public class CorridaServico extends ServicoInteiroBase<Corrida> implements ICorr
         Veiculo veiculo = corrida.getVeiculo();
         Estacao origem = corrida.getEstacaoOrigem();
 
+        exigir(!(usuario instanceof Administrador),
+                "Administradores não podem iniciar corridas como usuários comuns.");
+
         exigir(origem.getStatus() != StatusEstacao.BLOQUEADA,
                 "Não é possível iniciar uma corrida: a estação "
                         + origem.getId() + " está bloqueada.");
@@ -202,6 +206,9 @@ public class CorridaServico extends ServicoInteiroBase<Corrida> implements ICorr
         Estacao destino = idEstacaoDestino != null
                 ? estacaoServico.buscarPorId(idEstacaoDestino)
                 : estacaoServico.obterZonaLivre();
+
+        exigir(!destino.estaBloqueada(),
+                "Não é possível finalizar uma corrida em uma estação bloqueada.");
 
         // REQ21 - Estação precisa possuir vaga.
         exigir(destino.temVaga(),

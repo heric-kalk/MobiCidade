@@ -6,8 +6,10 @@ import com.mobicidade.model.Estacao;
 import com.mobicidade.model.Usuario;
 import com.mobicidade.model.UsuarioAssinante;
 import com.mobicidade.model.UsuarioComum;
+import com.mobicidade.model.StatusVeiculo;
 import com.mobicidade.model.Veiculo;
 import com.mobicidade.ui.AlertaClima;
+import com.mobicidade.ui.EstiloMensagem;
 import com.mobicidade.ui.Navegador;
 
 import javafx.animation.KeyFrame;
@@ -28,16 +30,19 @@ import javafx.util.Duration;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Comparator;
 
 public class MenuUsuarioController {
 
     private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    private static final int INTERVALO_ATUALIZACAO_SEGUNDOS = 2;
     private static final String SEM_CORRIDA = "Você não possui nenhuma corrida em andamento.";
 
     private final IMobiCidadeFachada fachada;
     private Usuario usuario;
     private Corrida corridaAtual;
     private Timeline atualizacaoEstacoes;
+    private List<Corrida> corridasDoSistema = List.of();
 
     @FXML
     private Label tituloConteudo;
@@ -47,6 +52,75 @@ public class MenuUsuarioController {
 
     @FXML
     private Label alertaClima;
+
+    @FXML
+    private VBox painelInicio;
+
+    @FXML
+    private Label resumoCorridasAtivas;
+
+    @FXML
+    private Label resumoEstacoesAtivas;
+
+    @FXML
+    private Label resumoVeiculosDisponiveis;
+
+    @FXML
+    private TableView<Corrida> tabelaInicioCorridas;
+
+    @FXML
+    private TableColumn<Corrida, String> colunaInicioCorridaId;
+
+    @FXML
+    private TableColumn<Corrida, String> colunaInicioCorridaVeiculo;
+
+    @FXML
+    private TableColumn<Corrida, String> colunaInicioCorridaOrigem;
+
+    @FXML
+    private TableColumn<Corrida, String> colunaInicioCorridaDestino;
+
+    @FXML
+    private TableColumn<Corrida, String> colunaInicioCorridaStatus;
+
+    @FXML
+    private TableColumn<Corrida, String> colunaInicioCorridaData;
+
+    @FXML
+    private TableView<Estacao> tabelaInicioEstacoes;
+
+    @FXML
+    private TableColumn<Estacao, String> colunaInicioEstacaoId;
+
+    @FXML
+    private TableColumn<Estacao, String> colunaInicioEstacaoNome;
+
+    @FXML
+    private TableColumn<Estacao, String> colunaInicioEstacaoStatus;
+
+    @FXML
+    private TableColumn<Estacao, String> colunaInicioEstacaoDisponiveis;
+
+    @FXML
+    private TableColumn<Estacao, String> colunaInicioEstacaoVagas;
+
+    @FXML
+    private TableView<Veiculo> tabelaInicioVeiculos;
+
+    @FXML
+    private TableColumn<Veiculo, String> colunaInicioVeiculoEstacao;
+
+    @FXML
+    private TableColumn<Veiculo, String> colunaInicioVeiculoIdentificacao;
+
+    @FXML
+    private TableColumn<Veiculo, String> colunaInicioVeiculoStatus;
+
+    @FXML
+    private TableColumn<Veiculo, String> colunaInicioVeiculoBateria;
+
+    @FXML
+    private Label mensagemInicio;
 
     @FXML
     private VBox painelEstacoes;
@@ -175,17 +249,60 @@ public class MenuUsuarioController {
 
     @FXML
     private void initialize() {
+        configurarTabelaInicio();
         configurarTabelaEstacoes();
         configurarTabelaHistorico();
         mostrarInicio();
 
-        atualizacaoEstacoes = new Timeline(new KeyFrame(Duration.seconds(1), evento -> {
-            if (painelEstacoes.isVisible()) {
-                carregarEstacoes();
-            }
-        }));
+        atualizacaoEstacoes = new Timeline(new KeyFrame(
+                Duration.seconds(INTERVALO_ATUALIZACAO_SEGUNDOS), evento -> {
+                    if (painelInicio.isVisible()) {
+                        carregarPainelInicio();
+                    }
+                    if (painelEstacoes.isVisible()) {
+                        carregarEstacoes();
+                    }
+                }));
         atualizacaoEstacoes.setCycleCount(Timeline.INDEFINITE);
-        atualizacaoEstacoes.play();
+        atualizacaoEstacoes.playFromStart();
+    }
+
+    private void configurarTabelaInicio() {
+        tabelaInicioCorridas.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+        colunaInicioCorridaId.setCellValueFactory(d -> texto("#" + d.getValue().getId()));
+        colunaInicioCorridaVeiculo.setCellValueFactory(d -> texto(descreverVeiculo(d.getValue().getVeiculo())));
+        colunaInicioCorridaOrigem.setCellValueFactory(d -> texto(d.getValue().getEstacaoOrigem().getNome()));
+        colunaInicioCorridaDestino.setCellValueFactory(d -> texto(descreverDestino(d.getValue())));
+        colunaInicioCorridaStatus.setCellValueFactory(d -> texto(descreverStatusCorrida(d.getValue())));
+        EstiloMensagem.destacarEstadosNegativos(colunaInicioCorridaStatus,
+                status -> "Não iniciada".equalsIgnoreCase(status));
+        colunaInicioCorridaData.setCellValueFactory(d -> texto(
+                d.getValue().getDataHoraInicio() == null
+                        ? "—"
+                        : d.getValue().getDataHoraInicio().format(FORMATO_DATA)));
+
+        tabelaInicioEstacoes.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+        colunaInicioEstacaoId.setCellValueFactory(d -> texto(d.getValue().getId()));
+        colunaInicioEstacaoNome.setCellValueFactory(d -> texto(d.getValue().getNome()));
+        colunaInicioEstacaoStatus.setCellValueFactory(d -> texto(
+                d.getValue().estaBloqueada() ? "Bloqueada" : "Ativa"));
+        EstiloMensagem.destacarEstadosNegativos(colunaInicioEstacaoStatus,
+                status -> "Bloqueada".equalsIgnoreCase(status));
+        colunaInicioEstacaoDisponiveis.setCellValueFactory(d -> texto(d.getValue().veiculosDisponiveis()));
+        colunaInicioEstacaoVagas.setCellValueFactory(d -> texto(d.getValue().vagasLivres()));
+
+        tabelaInicioVeiculos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+        colunaInicioVeiculoEstacao.setCellValueFactory(
+                d -> texto(descreverLocalizacaoVeiculo(d.getValue(), corridasDoSistema)));
+        EstiloMensagem.destacarEstadosNegativos(colunaInicioVeiculoEstacao,
+                local -> local != null && (local.startsWith("Em manutenção")
+                        || local.startsWith("Fora de estação")
+                        || local.startsWith("Sem estação vinculada")));
+        colunaInicioVeiculoIdentificacao.setCellValueFactory(d -> texto(descreverVeiculo(d.getValue())));
+        colunaInicioVeiculoStatus.setCellValueFactory(d -> texto(descreverStatusVeiculo(d.getValue())));
+        EstiloMensagem.destacarEstadosNegativos(colunaInicioVeiculoStatus,
+                status -> !"Disponível".equalsIgnoreCase(status));
+        colunaInicioVeiculoBateria.setCellValueFactory(d -> texto(descreverBateria(d.getValue())));
     }
 
     private void configurarTabelaEstacoes() {
@@ -200,6 +317,8 @@ public class MenuUsuarioController {
         colunaDisponiveis.setCellValueFactory(d -> texto(d.getValue().veiculosDisponiveis()));
         colunaVagas.setCellValueFactory(d -> texto(d.getValue().vagasLivres()));
         colunaStatus.setCellValueFactory(d -> texto(d.getValue().getStatus()));
+        EstiloMensagem.destacarEstadosNegativos(colunaStatus,
+                status -> status != null && status.toUpperCase(java.util.Locale.ROOT).contains("BLOQUEAD"));
     }
 
     private void configurarTabelaHistorico() {
@@ -229,21 +348,152 @@ public class MenuUsuarioController {
     }
 
     private void exibirApenas(Node painel, String titulo, String descricao) {
-        for (Node p : List.of(painelEstacoes, formularioCorrida, painelMinhaCorrida, painelHistorico, painelPerfil)) {
+        for (Node p : List.of(painelInicio, painelEstacoes, formularioCorrida,
+                painelMinhaCorrida, painelHistorico, painelPerfil)) {
             boolean exibir = p == painel;
             p.setVisible(exibir);
             p.setManaged(exibir);
         }
         tituloConteudo.setText(titulo);
-        descricaoConteudo.setText(descricao);
+        EstiloMensagem.informacao(descricaoConteudo, descricao);
         AlertaClima.ocultar(alertaClima);
     }
 
     @FXML
     private void mostrarInicio() {
-        exibirApenas(null, "Bem-vindo ao MobiCidade",
-                "Gerencie suas viagens e acompanhe os serviços disponíveis.");
+        exibirApenas(painelInicio, "Bem-vindo ao MobiCidade",
+                "Acompanhe suas corridas, consulte a situação das estações e veja cada veículo e seu status.");
+        carregarPainelInicio();
         AlertaClima.atualizar(fachada, alertaClima);
+    }
+
+    private void carregarPainelInicio() {
+        try {
+            // Consulta cada fonte uma única vez por ciclo, mantendo os dados desta
+            // atualização consistentes entre as três tabelas.
+            List<Corrida> todasCorridas = fachada.listarCorridas();
+            corridasDoSistema = todasCorridas;
+            List<Estacao> estacoes = fachada.listarEstacoes().stream()
+                    .sorted(Comparator.comparingInt(Estacao::getId))
+                    .toList();
+            List<Veiculo> todosVeiculos = fachada.listarVeiculos();
+
+            List<Corrida> corridasUsuario = todasCorridas.stream()
+                    .filter(corrida -> corrida.getUsuario() != null
+                            && corrida.getUsuario().getCpf().equals(usuario.getCpf()))
+                    .sorted(Comparator.comparing(Corrida::getDataHoraInicio,
+                            Comparator.nullsLast(Comparator.reverseOrder())))
+                    .toList();
+
+            // A tela inicial apresenta apenas uma corrida: a que estiver ativa.
+            // Sem corrida ativa, mostra a mais recente para preservar o resultado
+            // da última finalização (inclusive o destino Zona Livre).
+            List<Corrida> corridaStatus = corridasUsuario.stream()
+                    .filter(Corrida::emAndamento)
+                    .findFirst()
+                    .or(() -> corridasUsuario.stream().findFirst())
+                    .map(List::of)
+                    .orElseGet(List::of);
+
+            List<Veiculo> veiculos = todosVeiculos.stream()
+                    .sorted(Comparator
+                            .comparing((Veiculo veiculo) -> descreverLocalizacaoVeiculo(veiculo, todasCorridas))
+                            .thenComparingInt(Veiculo::getId))
+                    .toList();
+
+            // setAll substitui a coleção e refresh força a reavaliação das células.
+            // Isso é importante porque as entidades são os mesmos objetos em memória,
+            // mas seus status, vínculos de estação e quantidades podem ter mudado.
+            tabelaInicioCorridas.getItems().setAll(corridaStatus);
+            tabelaInicioEstacoes.getItems().setAll(estacoes);
+            tabelaInicioVeiculos.getItems().setAll(veiculos);
+            tabelaInicioCorridas.refresh();
+            tabelaInicioEstacoes.refresh();
+            tabelaInicioVeiculos.refresh();
+
+            long corridasAtivas = corridaStatus.stream().filter(Corrida::emAndamento).count();
+            long estacoesAtivas = estacoes.stream().filter(estacao -> !estacao.estaBloqueada()).count();
+            long veiculosDisponiveis = veiculos.stream().filter(Veiculo::estaDisponivel).count();
+
+            resumoCorridasAtivas.setText(String.valueOf(corridasAtivas));
+            resumoEstacoesAtivas.setText(estacoesAtivas + " / " + estacoes.size());
+            resumoVeiculosDisponiveis.setText(String.valueOf(veiculosDisponiveis));
+
+            String detalheVeiculos = veiculos.isEmpty()
+                    ? "Ainda não existem veículos cadastrados no sistema."
+                    : "Veículos listados individualmente: " + veiculos.size() + ".";
+            if (veiculos.isEmpty()) {
+                EstiloMensagem.erro(mensagemInicio, detalheVeiculos);
+            } else {
+                EstiloMensagem.informacao(mensagemInicio, detalheVeiculos);
+            }
+        } catch (Exception e) {
+            EstiloMensagem.erro(mensagemInicio,
+                    "Não foi possível consultar os dados do painel: " + e.getMessage());
+        }
+    }
+
+    private static String descreverDestino(Corrida corrida) {
+        if (corrida.emAndamento()) {
+            return "—";
+        }
+        if (corrida.getEstacaoDestino() != null) {
+            return corrida.getEstacaoDestino().getNome();
+        }
+        return corrida.zonaLivre() ? "Zona Livre" : "Fora de estação";
+    }
+
+    private static String descreverStatusCorrida(Corrida corrida) {
+        if (corrida.emAndamento()) {
+            return "Em andamento";
+        }
+        if (corrida.finalizada()) {
+            return "Finalizada";
+        }
+        return "Não iniciada";
+    }
+
+    private static String descreverStatusVeiculo(Veiculo veiculo) {
+        StatusVeiculo status = veiculo.getStatus();
+        if (status == null) {
+            return "Indefinido";
+        }
+        return switch (status) {
+            case DISPONIVEL -> "Disponível";
+            case EM_USO -> "Em uso";
+            case MANUTENCAO -> "Em manutenção";
+            case FORA_DE_ESTACAO -> "Fora de estação";
+        };
+    }
+
+    private String descreverLocalizacaoVeiculo(Veiculo veiculo, List<Corrida> corridas) {
+        if (veiculo.getEstacao() != null) {
+            return veiculo.getEstacao().getNome();
+        }
+
+        if (veiculo.getStatus() == StatusVeiculo.EM_USO) {
+            return corridas.stream()
+                    .filter(Corrida::emAndamento)
+                    .filter(corrida -> corrida.getVeiculo() != null
+                            && corrida.getVeiculo().getId() == veiculo.getId())
+                    .findFirst()
+                    .map(corrida -> "Em uso — corrida #" + corrida.getId())
+                    .orElse("Em uso");
+        }
+        if (veiculo.getStatus() == StatusVeiculo.MANUTENCAO) {
+            return "Em manutenção";
+        }
+        if (veiculo.getStatus() == StatusVeiculo.FORA_DE_ESTACAO) {
+            return "Fora de estação";
+        }
+        return "Sem estação vinculada";
+    }
+
+    private static String descreverBateria(Veiculo veiculo) {
+        if (veiculo instanceof com.mobicidade.model.Patinete patinete) {
+            return String.format(java.util.Locale.forLanguageTag("pt-BR"), "%.1f%%", patinete.getBateria());
+        }
+        return "—";
     }
 
     @FXML
@@ -286,11 +536,14 @@ public class MenuUsuarioController {
             List<Estacao> estacoes = fachada.listarEstacoes();
             tabelaEstacoes.getItems().setAll(estacoes);
             tabelaEstacoes.refresh();
-            mensagemEstacoes.setText(estacoes.isEmpty()
-                    ? "Não existem estações cadastradas no momento."
-                    : "Total de estações cadastradas: " + estacoes.size());
+            if (estacoes.isEmpty()) {
+                EstiloMensagem.erro(mensagemEstacoes, "Não existem estações cadastradas no momento.");
+            } else {
+                EstiloMensagem.informacao(mensagemEstacoes,
+                        "Total de estações cadastradas: " + estacoes.size());
+            }
         } catch (Exception e) {
-            mensagemEstacoes.setText("Erro ao carregar as estações: " + e.getMessage());
+            EstiloMensagem.erro(mensagemEstacoes, "Erro ao carregar as estações: " + e.getMessage());
         }
     }
 
@@ -301,9 +554,12 @@ public class MenuUsuarioController {
 
         selecaoEstacaoOrigem.setItems(FXCollections.observableArrayList(estacoes));
         selecaoVeiculo.getItems().clear();
-        mensagemCorrida.setText(estacoes.isEmpty()
-                ? "Não existem estações ativas disponíveis."
-                : "Selecione uma estação para visualizar os veículos.");
+        if (estacoes.isEmpty()) {
+            EstiloMensagem.erro(mensagemCorrida, "Não existem estações ativas disponíveis.");
+        } else {
+            EstiloMensagem.informacao(mensagemCorrida,
+                    "Selecione uma estação para visualizar os veículos.");
+        }
     }
 
     @FXML
@@ -320,9 +576,11 @@ public class MenuUsuarioController {
                 .toList();
 
         selecaoVeiculo.setItems(FXCollections.observableArrayList(veiculos));
-        mensagemCorrida.setText(veiculos.isEmpty()
-                ? "Esta estação não possui veículos disponíveis."
-                : "Veículos disponíveis: " + veiculos.size());
+        if (veiculos.isEmpty()) {
+            EstiloMensagem.erro(mensagemCorrida, "Esta estação não possui veículos disponíveis.");
+        } else {
+            EstiloMensagem.informacao(mensagemCorrida, "Veículos disponíveis: " + veiculos.size());
+        }
     }
 
     // REQ09, REQ17 a REQ20
@@ -332,21 +590,21 @@ public class MenuUsuarioController {
         Veiculo veiculo = selecaoVeiculo.getValue();
 
         if (estacao == null) {
-            mensagemCorrida.setText("Selecione uma estação de origem.");
+            EstiloMensagem.erro(mensagemCorrida, "Selecione uma estação de origem.");
             return;
         }
 
         if (veiculo == null) {
-            mensagemCorrida.setText("Selecione um veículo.");
+            EstiloMensagem.erro(mensagemCorrida, "Selecione um veículo.");
             return;
         }
 
         try {
             Corrida corrida = fachada.iniciarCorrida(usuario.getCpf(), veiculo.getId(), estacao.getId());
             atualizarVeiculosDisponiveis();
-            mensagemCorrida.setText("Corrida #" + corrida.getId() + " iniciada com sucesso!");
+            EstiloMensagem.sucesso(mensagemCorrida, "Corrida #" + corrida.getId() + " iniciada com sucesso!");
         } catch (Exception e) {
-            mensagemCorrida.setText("Não foi possível iniciar a corrida: " + e.getMessage());
+            EstiloMensagem.erro(mensagemCorrida, "Não foi possível iniciar a corrida: " + e.getMessage());
         }
     }
 
@@ -358,15 +616,15 @@ public class MenuUsuarioController {
                 .orElse(null);
 
         zonaLivre.setSelected(false);
-        mensagemMinhaCorrida.setText("");
+        EstiloMensagem.limpar(mensagemMinhaCorrida);
 
         if (corridaAtual == null) {
-            detalhesMinhaCorrida.setText(SEM_CORRIDA);
+            EstiloMensagem.erro(detalhesMinhaCorrida, SEM_CORRIDA);
             selecaoEstacaoDestino.getItems().clear();
             return;
         }
 
-        detalhesMinhaCorrida.setText(
+        EstiloMensagem.informacao(detalhesMinhaCorrida,
                 "Corrida: #" + corridaAtual.getId() + "\n"
                         + "Veículo: " + descreverVeiculo(corridaAtual.getVeiculo()) + "\n"
                         + "Origem: " + corridaAtual.getEstacaoOrigem().getNome() + "\n"
@@ -381,7 +639,7 @@ public class MenuUsuarioController {
         selecaoEstacaoDestino.setDisable(false);
 
         if (estacoes.isEmpty()) {
-            mensagemMinhaCorrida.setText("Não existem estações com vagas disponíveis no momento.");
+            EstiloMensagem.erro(mensagemMinhaCorrida, "Não existem estações com vagas disponíveis no momento.");
         }
     }
 
@@ -398,14 +656,14 @@ public class MenuUsuarioController {
     @FXML
     private void finalizarCorrida() {
         if (corridaAtual == null) {
-            mensagemMinhaCorrida.setText("Você não possui uma corrida em andamento.");
+            EstiloMensagem.erro(mensagemMinhaCorrida, "Você não possui uma corrida em andamento.");
             return;
         }
 
         Estacao destino = selecaoEstacaoDestino.getValue();
 
         if (destino == null && !zonaLivre.isSelected()) {
-            mensagemMinhaCorrida.setText("Selecione uma estação de destino ou marque a devolução em zona livre.");
+            EstiloMensagem.erro(mensagemMinhaCorrida, "Selecione uma estação de destino ou marque a devolução em zona livre.");
             return;
         }
 
@@ -413,18 +671,18 @@ public class MenuUsuarioController {
             Corrida finalizada = fachada.finalizarCorrida(corridaAtual.getId(),
                     zonaLivre.isSelected() || destino == null ? null : destino.getId());
 
-            mensagemMinhaCorrida.setText("Corrida finalizada com sucesso!\n"
+            EstiloMensagem.sucesso(mensagemMinhaCorrida, "Corrida finalizada com sucesso!\n"
                     + "Duração: " + finalizada.getDuracao() + " minutos\n"
                     + "Tarifa: " + moeda(finalizada.getTarifa()));
 
             corridaAtual = null;
-            detalhesMinhaCorrida.setText(SEM_CORRIDA);
+            EstiloMensagem.erro(detalhesMinhaCorrida, SEM_CORRIDA);
             selecaoEstacaoDestino.getItems().clear();
             zonaLivre.setSelected(false);
             selecaoEstacaoDestino.setDisable(false);
 
         } catch (Exception e) {
-            mensagemMinhaCorrida.setText("Não foi possível finalizar a corrida: " + e.getMessage());
+            EstiloMensagem.erro(mensagemMinhaCorrida, "Não foi possível finalizar a corrida: " + e.getMessage());
         }
     }
 
@@ -470,7 +728,7 @@ public class MenuUsuarioController {
         estatisticaMinutos.setText(corridas.stream().mapToInt(Corrida::getDuracao).sum() + " min");
         estatisticaGastos.setText(moeda(corridas.stream().mapToDouble(Corrida::getTarifa).sum()));
 
-        mensagemPerfil.setText("");
+        EstiloMensagem.limpar(mensagemPerfil);
     }
 
     @FXML
@@ -478,9 +736,9 @@ public class MenuUsuarioController {
         try {
             usuario = fachada.renovarPlano(usuario.getCpf());
             carregarPerfil();
-            mensagemPerfil.setText("Plano renovado com sucesso!");
+            EstiloMensagem.sucesso(mensagemPerfil, "Plano renovado com sucesso!");
         } catch (Exception e) {
-            mensagemPerfil.setText("Não foi possível renovar o plano: " + e.getMessage());
+            EstiloMensagem.erro(mensagemPerfil, "Não foi possível renovar o plano: " + e.getMessage());
         }
     }
 
@@ -493,12 +751,12 @@ public class MenuUsuarioController {
         String novaFormaPagamento = campoFormaPagamento.getText().trim();
 
         if (novoNome.isEmpty()) {
-            mensagemPerfil.setText("O nome não pode ficar vazio.");
+            EstiloMensagem.erro(mensagemPerfil, "O nome não pode ficar vazio.");
             return;
         }
 
         if (novaFormaPagamento.isEmpty()) {
-            mensagemPerfil.setText("Informe uma forma de pagamento.");
+            EstiloMensagem.erro(mensagemPerfil, "Informe uma forma de pagamento.");
             return;
         }
 
@@ -508,14 +766,14 @@ public class MenuUsuarioController {
             usuario = fachada.atualizarUsuario(usuario);
 
             carregarPerfil();
-            mensagemPerfil.setText("Perfil atualizado com sucesso!");
+            EstiloMensagem.sucesso(mensagemPerfil, "Perfil atualizado com sucesso!");
 
         } catch (Exception e) {
             usuario.setNome(nomeAntigo);
             usuario.setFormaDePagamento(pagamentoAntigo);
             campoNome.setText(nomeAntigo);
             campoFormaPagamento.setText(pagamentoAntigo);
-            mensagemPerfil.setText("Não foi possível atualizar o perfil: " + e.getMessage());
+            EstiloMensagem.erro(mensagemPerfil, "Não foi possível atualizar o perfil: " + e.getMessage());
         }
     }
 
@@ -526,7 +784,7 @@ public class MenuUsuarioController {
             Navegador.exibir(tituloConteudo, Navegador.login(fachada));
         } catch (Exception e) {
             atualizacaoEstacoes.play();
-            descricaoConteudo.setText("Não foi possível voltar ao login: " + e.getMessage());
+            EstiloMensagem.erro(descricaoConteudo, "Não foi possível voltar ao login: " + e.getMessage());
         }
     }
 }

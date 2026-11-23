@@ -4,14 +4,22 @@ import com.mobicidade.model.Estacao;
 import com.mobicidade.model.Patinete;
 import com.mobicidade.model.StatusVeiculo;
 import com.mobicidade.model.Veiculo;
+import com.mobicidade.repository.ICorridaRepositorio;
 import com.mobicidade.repository.IVeiculoRepositorio;
 
 public class VeiculoServico extends ServicoInteiroBase<Veiculo> implements IVeiculoServico {
     private final IEstacaoServico estacaoServico;
+    private final ICorridaRepositorio corridaRepositorio;
 
     public VeiculoServico(IVeiculoRepositorio repositorio, IEstacaoServico estacaoServico) {
+        this(repositorio, estacaoServico, null);
+    }
+
+    public VeiculoServico(IVeiculoRepositorio repositorio, IEstacaoServico estacaoServico,
+            ICorridaRepositorio corridaRepositorio) {
         super(repositorio);
         this.estacaoServico = estacaoServico;
+        this.corridaRepositorio = corridaRepositorio;
     }
 
     @Override
@@ -49,7 +57,10 @@ public class VeiculoServico extends ServicoInteiroBase<Veiculo> implements IVeic
 
     @Override
     protected void regrasDeCadastro(Veiculo veiculo) {
-        exigir(veiculo.getEstacao().temVaga(), "A estação não possui vagas livres.");
+        Estacao estacao = veiculo.getEstacao();
+        exigir(!estacao.estaBloqueada(), "Não é possível cadastrar veículo em uma estação bloqueada.");
+        exigir(!estacao.ehZonaLivre(), "Não é permitido cadastrar veículos diretamente na estação Zona Livre.");
+        exigir(estacao.temVaga(), "A estação não possui vagas livres.");
     }
 
     @Override
@@ -64,6 +75,8 @@ public class VeiculoServico extends ServicoInteiroBase<Veiculo> implements IVeic
         if (novo.getEstacao() != null && existente.getEstacao() != null
                 && novo.getEstacao().getId() != existente.getEstacao().getId()) {
             Estacao destino = estacaoServico.buscarPorId(novo.getEstacao().getId());
+            exigir(!destino.estaBloqueada(), "Não é possível mover um veículo para uma estação bloqueada.");
+            exigir(!destino.ehZonaLivre(), "Não é permitido cadastrar veículos diretamente na estação Zona Livre.");
             exigir(destino.temVaga(), "A nova estação não possui vagas livres.");
         }
     }
@@ -88,6 +101,12 @@ public class VeiculoServico extends ServicoInteiroBase<Veiculo> implements IVeic
 
         exigir(veiculo.getStatus() != StatusVeiculo.MANUTENCAO,
                 "Não é possível remover um veículo em manutenção.");
+
+        boolean possuiHistorico = corridaRepositorio != null
+                && corridaRepositorio.listarTodos().stream().anyMatch(corrida ->
+                        corrida.getVeiculo() != null && corrida.getVeiculo().getId() == veiculo.getId());
+        exigir(!possuiHistorico,
+                "Não é possível remover um veículo que possui histórico de corridas.");
     }
 
     @Override
@@ -104,6 +123,7 @@ public class VeiculoServico extends ServicoInteiroBase<Veiculo> implements IVeic
                 || (veiculo.getEstacao() != null && veiculo.getEstacao().ehZonaLivre()),
                 "Apenas veículos deixados em zona livre podem ser recolhidos.");
         Estacao estacao = estacaoServico.buscarPorId(idEstacao);
+        exigir(!estacao.estaBloqueada(), "Não é possível recolher veículo para uma estação bloqueada.");
         exigir(!estacao.ehZonaLivre(), "Escolha uma estação válida para recolher o veículo.");
         exigir(estacao.temVaga(), "A estação não possui vagas livres.");
         veiculo.estacionarEm(estacao);

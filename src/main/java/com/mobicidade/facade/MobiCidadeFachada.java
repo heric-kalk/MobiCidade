@@ -71,8 +71,8 @@ public class MobiCidadeFachada implements IMobiCidadeFachada {
             DadosIniciais.carregar(estacaoRepo, veiculoRepo, usuarioRepo, corridaRepo, manutencaoRepo);
         }
 
-        this.estacaoServico = new EstacaoServico(estacaoRepo);
-        this.veiculoServico = new VeiculoServico(veiculoRepo, estacaoServico);
+        this.estacaoServico = new EstacaoServico(estacaoRepo, corridaRepo);
+        this.veiculoServico = new VeiculoServico(veiculoRepo, estacaoServico, corridaRepo);
         this.usuarioServico = new UsuarioServico(usuarioRepo, corridaRepo);
         this.climaServico = new ClimaServico(provedorClima);
         this.corridaServico = new CorridaServico(corridaRepo, usuarioServico, veiculoServico,

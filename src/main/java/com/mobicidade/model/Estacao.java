@@ -33,7 +33,7 @@ public class Estacao {
     }
 
     public boolean ehZonaLivre() {
-        return NOME_ZONA_LIVRE.equalsIgnoreCase(nome);
+        return nome != null && NOME_ZONA_LIVRE.equalsIgnoreCase(nome.trim());
     }
 
     // REQ03

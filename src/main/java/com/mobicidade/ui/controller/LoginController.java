@@ -4,6 +4,7 @@ import com.mobicidade.facade.IMobiCidadeFachada;
 import com.mobicidade.model.Administrador;
 import com.mobicidade.model.Usuario;
 import com.mobicidade.ui.Navegador;
+import com.mobicidade.ui.EstiloMensagem;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -33,7 +34,7 @@ public class LoginController {
         String senha = campoSenha.getText();
 
         if (cpf.isBlank() || senha.isBlank()) {
-            mensagem.setText("Preencha todos os campos.");
+            EstiloMensagem.erro(mensagem, "Preencha todos os campos.");
             return;
         }
 
@@ -41,7 +42,7 @@ public class LoginController {
             Usuario usuario = fachada.autenticarUsuario(cpf, senha);
 
             if (usuario == null) {
-                mensagem.setText("CPF ou senha inválidos.");
+                EstiloMensagem.erro(mensagem, "CPF ou senha inválidos.");
                 return;
             }
 
@@ -50,7 +51,7 @@ public class LoginController {
                     : Navegador.menuUsuario(fachada, usuario));
 
         } catch (Exception e) {
-            mensagem.setText("Erro ao abrir a tela: " + e.getMessage());
+            EstiloMensagem.erro(mensagem, "Erro ao abrir a tela: " + e.getMessage());
         }
     }
 
@@ -59,7 +60,7 @@ public class LoginController {
         try {
             Navegador.exibir(campoCpf, Navegador.cadastro(fachada));
         } catch (Exception e) {
-            mensagem.setText("Erro ao abrir a tela de cadastro.");
+            EstiloMensagem.erro(mensagem, "Erro ao abrir a tela de cadastro.");
         }
     }
 }

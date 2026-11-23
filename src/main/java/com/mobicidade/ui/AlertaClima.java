@@ -20,7 +20,7 @@ public final class AlertaClima {
     private static final String ESTILO_NORMAL = ESTILO_BASE
             + "-fx-background-color: #dcfce7; -fx-text-fill: #166534;";
     private static final String ESTILO_AVISO = ESTILO_BASE
-            + "-fx-background-color: #fef9c3; -fx-text-fill: #854d0e;";
+            + "-fx-background-color: #fecaca; -fx-text-fill: #991b1b; -fx-font-weight: bold;";
 
     private AlertaClima() {
     }

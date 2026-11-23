@@ -8,6 +8,7 @@ import com.mobicidade.model.Patinete;
 import com.mobicidade.model.StatusVeiculo;
 import com.mobicidade.model.Veiculo;
 import com.mobicidade.ui.AlertaClima;
+import com.mobicidade.ui.EstiloMensagem;
 import com.mobicidade.ui.Navegador;
 
 import javafx.animation.KeyFrame;
@@ -64,6 +65,15 @@ public class MenuAdministradorController {
 
     @FXML
     private VBox acoesBloqueioEstacao;
+
+    @FXML
+    private VBox painelTabelaEstacoes;
+
+    @FXML
+    private VBox painelTabelaVeiculos;
+
+    @FXML
+    private VBox painelTabelaManutencoes;
 
     @FXML
     private TableView<Estacao> tabelaEstacoes;
@@ -277,17 +287,25 @@ public class MenuAdministradorController {
 
     private void exibirApenas(String titulo, String descricao, Node... nos) {
         for (Node no : List.of(formularioEstacao, formularioVeiculo, formularioManutencao,
-                formularioFinalizacaoManutencao, tabelaEstacoes, tabelaManutencoes, tabelaVeiculos,
+                formularioFinalizacaoManutencao, painelTabelaEstacoes, painelTabelaVeiculos,
+                painelTabelaManutencoes, tabelaEstacoes, tabelaManutencoes, tabelaVeiculos,
                 botaoRemoverEstacao, botaoRemoverVeiculo, acoesBloqueioEstacao, acoesRecolherVeiculo,
                 painelRelatorios)) {
             exibir(no, false);
         }
         for (Node no : nos) {
             exibir(no, true);
+            if (no == tabelaEstacoes || no == botaoRemoverEstacao || no == acoesBloqueioEstacao) {
+                exibir(painelTabelaEstacoes, true);
+            } else if (no == tabelaVeiculos || no == botaoRemoverVeiculo || no == acoesRecolherVeiculo) {
+                exibir(painelTabelaVeiculos, true);
+            } else if (no == tabelaManutencoes) {
+                exibir(painelTabelaManutencoes, true);
+            }
         }
         AlertaClima.ocultar(alertaClima);
         tituloConteudo.setText(titulo);
-        descricaoConteudo.setText(descricao);
+        EstiloMensagem.informacao(descricaoConteudo, descricao);
     }
 
     private boolean confirmar(String titulo, String cabecalho, String texto) {
@@ -295,6 +313,7 @@ public class MenuAdministradorController {
         confirmacao.setTitle(titulo);
         confirmacao.setHeaderText(cabecalho);
         confirmacao.setContentText(texto);
+        EstiloMensagem.destacarAlerta(confirmacao);
         return confirmacao.showAndWait().filter(botao -> botao == ButtonType.OK).isPresent();
     }
 
@@ -303,6 +322,7 @@ public class MenuAdministradorController {
         alerta.setTitle(titulo);
         alerta.setHeaderText(cabecalho);
         alerta.setContentText(conteudo);
+        EstiloMensagem.destacarAlerta(alerta);
         alerta.showAndWait();
     }
 
@@ -311,7 +331,18 @@ public class MenuAdministradorController {
     }
 
     private void mostrarSucesso(String cabecalho, String conteudo) {
-        mostrarMensagem(Alert.AlertType.INFORMATION, "Sucesso", cabecalho, conteudo);
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Sucesso");
+        alerta.setHeaderText(cabecalho);
+        alerta.setContentText(conteudo);
+
+        String acao = (cabecalho + " " + conteudo).toLowerCase(Locale.ROOT);
+        if (acao.contains("bloquead") || acao.contains("removid") || acao.contains("exclu")) {
+            EstiloMensagem.destacarAviso(alerta);
+        } else {
+            EstiloMensagem.destacarSucesso(alerta);
+        }
+        alerta.showAndWait();
     }
 
     private <T> T obterSelecionado(TableView<T> tabela, String cabecalho, String conteudo) {
@@ -343,12 +374,16 @@ public class MenuAdministradorController {
         colunaVeiculos.setCellValueFactory(c -> new ReadOnlyObjectWrapper<>(c.getValue().veiculosDisponiveis()));
         colunaVagas.setCellValueFactory(c -> new ReadOnlyObjectWrapper<>(c.getValue().vagasLivres()));
         colunaStatus.setCellValueFactory(c -> new ReadOnlyObjectWrapper<>(c.getValue().getStatus().name()));
+        EstiloMensagem.destacarEstadosNegativos(colunaStatus,
+                status -> status != null && status.toUpperCase(Locale.ROOT).contains("BLOQUEAD"));
     }
 
     private void configurarColunasVeiculos() {
         colunaIdVeiculo.setCellValueFactory(c -> new ReadOnlyObjectWrapper<>(c.getValue().getId()));
         colunaTipoVeiculo.setCellValueFactory(c -> new ReadOnlyObjectWrapper<>(c.getValue().getTipo()));
         colunaStatusVeiculo.setCellValueFactory(c -> new ReadOnlyObjectWrapper<>(c.getValue().getStatus().name()));
+        EstiloMensagem.destacarEstadosNegativos(colunaStatusVeiculo,
+                status -> status != null && !"DISPONIVEL".equalsIgnoreCase(status));
         colunaEstacaoVeiculo.setCellValueFactory(c -> new ReadOnlyObjectWrapper<>(
                 c.getValue().getEstacao() == null ? "-" : c.getValue().getEstacao().getNome()));
         colunaBateriaVeiculo.setCellValueFactory(c -> new ReadOnlyObjectWrapper<>(
@@ -391,7 +426,7 @@ public class MenuAdministradorController {
     private void mostrarRegistroEstacao() {
         exibirApenas("Registrar estação", "Preencha os dados abaixo para cadastrar uma nova estação.",
                 formularioEstacao);
-        mensagemEstacao.setText("");
+        EstiloMensagem.limpar(mensagemEstacao);
     }
 
     @FXML
@@ -406,7 +441,7 @@ public class MenuAdministradorController {
             tabelaEstacoes.getItems().setAll(fachada.listarEstacoes());
             tabelaEstacoes.refresh();
         } catch (Exception e) {
-            descricaoConteudo.setText("Erro ao carregar as estações: " + e.getMessage());
+            EstiloMensagem.erro(descricaoConteudo, "Erro ao carregar as estações: " + e.getMessage());
         }
     }
 
@@ -478,7 +513,7 @@ public class MenuAdministradorController {
                     Double.parseDouble(campoLongitude.getText().trim().replace(',', '.')),
                     Integer.parseInt(campoCapacidade.getText().trim()));
 
-            mensagemEstacao.setText("Estação cadastrada com sucesso! ID: " + estacao.getId());
+            EstiloMensagem.sucesso(mensagemEstacao, "Estação cadastrada com sucesso! ID: " + estacao.getId());
 
             campoNomeEstacao.clear();
             campoLatitude.clear();
@@ -487,9 +522,9 @@ public class MenuAdministradorController {
             carregarEstacoes();
 
         } catch (NumberFormatException e) {
-            mensagemEstacao.setText("Latitude, longitude e capacidade devem conter valores numéricos válidos.");
+            EstiloMensagem.erro(mensagemEstacao, "Latitude, longitude e capacidade devem conter valores numéricos válidos.");
         } catch (Exception e) {
-            mensagemEstacao.setText(e.getMessage());
+            EstiloMensagem.erro(mensagemEstacao, e.getMessage());
         }
     }
 
@@ -524,7 +559,7 @@ public class MenuAdministradorController {
     private void mostrarCadastroVeiculo() {
         exibirApenas("Cadastrar veículo",
                 "Selecione o tipo de veículo e a estação onde ele será disponibilizado.", formularioVeiculo);
-        mensagemVeiculo.setText("");
+        EstiloMensagem.limpar(mensagemVeiculo);
         carregarEstacoesDisponiveis();
     }
 
@@ -538,7 +573,7 @@ public class MenuAdministradorController {
         try {
             selecaoEstacaoVeiculo.getItems().setAll(estacoesAtivasComVaga());
         } catch (Exception e) {
-            mensagemVeiculo.setText("Erro ao carregar estações: " + e.getMessage());
+            EstiloMensagem.erro(mensagemVeiculo, "Erro ao carregar estações: " + e.getMessage());
         }
     }
 
@@ -549,12 +584,12 @@ public class MenuAdministradorController {
         Estacao estacao = selecaoEstacaoVeiculo.getValue();
 
         if (tipo == null) {
-            mensagemVeiculo.setText("Selecione o tipo de veículo.");
+            EstiloMensagem.erro(mensagemVeiculo, "Selecione o tipo de veículo.");
             return;
         }
 
         if (estacao == null) {
-            mensagemVeiculo.setText("Selecione uma estação.");
+            EstiloMensagem.erro(mensagemVeiculo, "Selecione uma estação.");
             return;
         }
 
@@ -568,13 +603,13 @@ public class MenuAdministradorController {
                 try {
                     bateria = Double.parseDouble(campoBateriaVeiculo.getText().trim().replace(',', '.'));
                 } catch (NumberFormatException e) {
-                    mensagemVeiculo.setText("Informe um valor numérico válido para a bateria.");
+                    EstiloMensagem.erro(mensagemVeiculo, "Informe um valor numérico válido para a bateria.");
                     return;
                 }
                 veiculo = fachada.cadastrarPatinete(estacao.getId(), bateria);
             }
 
-            mensagemVeiculo.setText(tipo + " cadastrado(a) com sucesso! ID: " + veiculo.getId());
+            EstiloMensagem.sucesso(mensagemVeiculo, tipo + " cadastrado(a) com sucesso! ID: " + veiculo.getId());
 
             campoBateriaVeiculo.clear();
             selecaoTipoVeiculo.getSelectionModel().clearSelection();
@@ -585,14 +620,14 @@ public class MenuAdministradorController {
             carregarEstacoes();
 
         } catch (Exception e) {
-            mensagemVeiculo.setText(e.getMessage());
+            EstiloMensagem.erro(mensagemVeiculo, e.getMessage());
         }
     }
 
     @FXML
     private void mostrarVeiculos() {
         exibirApenas("Gerenciar veículos",
-                "Confira os veículos, recolha os deixados em zona livre ou remova os que não são mais necessários.",
+                "Confira os veículos e recolha aqueles que foram deixados na Zona Livre.",
                 tabelaVeiculos, acoesRecolherVeiculo, botaoRemoverVeiculo);
         carregarVeiculos();
         selecaoEstacaoRecolhimento.getItems().setAll(estacoesAtivasComVaga());
@@ -603,7 +638,7 @@ public class MenuAdministradorController {
             tabelaVeiculos.getItems().setAll(fachada.listarVeiculos());
             tabelaVeiculos.refresh();
         } catch (Exception e) {
-            descricaoConteudo.setText("Erro ao carregar os veículos: " + e.getMessage());
+            EstiloMensagem.erro(descricaoConteudo, "Erro ao carregar os veículos: " + e.getMessage());
         }
     }
 
@@ -658,7 +693,7 @@ public class MenuAdministradorController {
             tabelaManutencoes.getItems().setAll(fachada.listarManutencoes());
             tabelaManutencoes.refresh();
         } catch (Exception e) {
-            descricaoConteudo.setText("Erro ao carregar as manutenções: " + e.getMessage());
+            EstiloMensagem.erro(descricaoConteudo, "Erro ao carregar as manutenções: " + e.getMessage());
         }
     }
 
@@ -666,7 +701,7 @@ public class MenuAdministradorController {
     private void mostrarRegistroManutencao() {
         exibirApenas("Registrar manutenção",
                 "Selecione um veículo disponível e informe o motivo da manutenção.", formularioManutencao);
-        mensagemManutencao.setText("");
+        EstiloMensagem.limpar(mensagemManutencao);
         carregarVeiculosDisponiveis();
     }
 
@@ -676,7 +711,7 @@ public class MenuAdministradorController {
                     .filter(veiculo -> veiculo.getStatus() == StatusVeiculo.DISPONIVEL)
                     .toList());
         } catch (Exception e) {
-            mensagemManutencao.setText("Erro ao carregar veículos: " + e.getMessage());
+            EstiloMensagem.erro(mensagemManutencao, "Erro ao carregar veículos: " + e.getMessage());
         }
     }
 
@@ -687,25 +722,25 @@ public class MenuAdministradorController {
         String descricao = campoDescricaoManutencao.getText().trim();
 
         if (veiculo == null) {
-            mensagemManutencao.setText("Selecione um veículo para continuar.");
+            EstiloMensagem.erro(mensagemManutencao, "Selecione um veículo para continuar.");
             return;
         }
 
         if (descricao.isBlank()) {
-            mensagemManutencao.setText("Informe a descrição da manutenção.");
+            EstiloMensagem.erro(mensagemManutencao, "Informe a descrição da manutenção.");
             return;
         }
 
         try {
             Manutencao manutencao = fachada.registrarManutencao(veiculo.getId(), descricao);
-            mensagemManutencao.setText("Manutenção registrada com sucesso! ID: " + manutencao.getId());
+            EstiloMensagem.sucesso(mensagemManutencao, "Manutenção registrada com sucesso! ID: " + manutencao.getId());
 
             campoDescricaoManutencao.clear();
             selecaoVeiculoManutencao.getSelectionModel().clearSelection();
             carregarVeiculosDisponiveis();
 
         } catch (Exception e) {
-            mensagemManutencao.setText(e.getMessage());
+            EstiloMensagem.erro(mensagemManutencao, e.getMessage());
         }
     }
 
@@ -714,7 +749,7 @@ public class MenuAdministradorController {
         exibirApenas("Finalizar manutenção",
                 "Selecione uma manutenção em andamento e uma estação com vagas livres.",
                 formularioFinalizacaoManutencao);
-        mensagemFinalizacaoManutencao.setText("");
+        EstiloMensagem.limpar(mensagemFinalizacaoManutencao);
         carregarOpcoesFinalizacao();
     }
 
@@ -725,7 +760,7 @@ public class MenuAdministradorController {
                     .toList());
             selecaoEstacaoDestino.getItems().setAll(estacoesAtivasComVaga());
         } catch (Exception e) {
-            mensagemFinalizacaoManutencao.setText("Erro ao carregar dados: " + e.getMessage());
+            EstiloMensagem.erro(mensagemFinalizacaoManutencao, "Erro ao carregar dados: " + e.getMessage());
         }
     }
 
@@ -736,12 +771,12 @@ public class MenuAdministradorController {
         Estacao estacao = selecaoEstacaoDestino.getValue();
 
         if (manutencao == null) {
-            mensagemFinalizacaoManutencao.setText("Selecione uma manutenção.");
+            EstiloMensagem.erro(mensagemFinalizacaoManutencao, "Selecione uma manutenção.");
             return;
         }
 
         if (estacao == null) {
-            mensagemFinalizacaoManutencao.setText("Selecione uma estação de destino.");
+            EstiloMensagem.erro(mensagemFinalizacaoManutencao, "Selecione uma estação de destino.");
             return;
         }
 
@@ -753,14 +788,14 @@ public class MenuAdministradorController {
 
         try {
             fachada.concluirManutencao(manutencao.getId(), estacao.getId());
-            mensagemFinalizacaoManutencao.setText("Manutenção finalizada com sucesso!");
+            EstiloMensagem.sucesso(mensagemFinalizacaoManutencao, "Manutenção finalizada com sucesso!");
 
             selecaoManutencao.getSelectionModel().clearSelection();
             selecaoEstacaoDestino.getSelectionModel().clearSelection();
             carregarOpcoesFinalizacao();
 
         } catch (Exception e) {
-            mensagemFinalizacaoManutencao.setText(e.getMessage());
+            EstiloMensagem.erro(mensagemFinalizacaoManutencao, e.getMessage());
         }
     }
 
@@ -798,9 +833,9 @@ public class MenuAdministradorController {
     private void atualizarRelatorios() {
         int total = carregarRelatorios();
         if (total == 0) {
-            mensagemRelatorios.setText("Nenhuma corrida finalizada para os filtros informados.");
+            EstiloMensagem.erro(mensagemRelatorios, "Nenhuma corrida finalizada para os filtros informados.");
         } else if (total > 0) {
-            mensagemRelatorios.setText("Relatório atualizado com sucesso.");
+            EstiloMensagem.sucesso(mensagemRelatorios, "Relatório atualizado com sucesso.");
         }
     }
 
@@ -810,7 +845,7 @@ public class MenuAdministradorController {
             LocalDateTime ate = periodoAte();
 
             if (de != null && ate != null && de.isAfter(ate)) {
-                mensagemRelatorios.setText("A data inicial não pode ser posterior à data final.");
+                EstiloMensagem.erro(mensagemRelatorios, "A data inicial não pode ser posterior à data final.");
                 return -1;
             }
 
@@ -831,7 +866,7 @@ public class MenuAdministradorController {
             return corridas.size();
 
         } catch (Exception e) {
-            mensagemRelatorios.setText("Erro ao consultar relatórios: " + e.getMessage());
+            EstiloMensagem.erro(mensagemRelatorios, "Erro ao consultar relatórios: " + e.getMessage());
             return -1;
         }
     }
@@ -849,11 +884,10 @@ public class MenuAdministradorController {
 
     private VBox criarSecaoUsuario(String nome, List<Corrida> corridas) {
         VBox secao = new VBox(10);
-        secao.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8;"
-                + "-fx-border-color: #cbd5e1; -fx-border-radius: 8; -fx-padding: 15;");
+        secao.getStyleClass().add("report-user-card");
 
         Label titulo = new Label(nome);
-        titulo.setStyle("-fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: #1e293b;");
+        titulo.getStyleClass().add("section-title");
         secao.getChildren().add(titulo);
 
         for (Corrida corrida : corridas) {
@@ -869,8 +903,7 @@ public class MenuAdministradorController {
                             + "\nDuração: " + corrida.getDuracao() + " minutos"
                             + "\nTarifa: " + MOEDA.format(corrida.getTarifa()));
             detalhes.setWrapText(true);
-            detalhes.setStyle("-fx-font-size: 13px; -fx-text-fill: #334155; -fx-padding: 8;"
-                    + "-fx-background-color: #f1f5f9; -fx-background-radius: 5;");
+            detalhes.getStyleClass().add("report-trip-detail");
             secao.getChildren().add(detalhes);
         }
 
@@ -892,9 +925,9 @@ public class MenuAdministradorController {
 
         try {
             fachada.exportarRelatorioCorridasCsv(idEstacaoFiltrada(), periodoDe(), periodoAte(), arquivo.toPath());
-            mensagemRelatorios.setText("CSV exportado em " + arquivo.getAbsolutePath());
+            EstiloMensagem.sucesso(mensagemRelatorios, "CSV exportado em " + arquivo.getAbsolutePath());
         } catch (Exception e) {
-            mensagemRelatorios.setText("Erro ao exportar o CSV: " + e.getMessage());
+            EstiloMensagem.erro(mensagemRelatorios, "Erro ao exportar o CSV: " + e.getMessage());
         }
     }
 }

@@ -3,6 +3,7 @@ package com.mobicidade.ui.controller;
 import com.mobicidade.facade.IMobiCidadeFachada;
 import com.mobicidade.model.UsuarioAssinante;
 import com.mobicidade.ui.Navegador;
+import com.mobicidade.ui.EstiloMensagem;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -67,8 +68,7 @@ public class CadastroUsuarioController {
                 fachada.cadastrarUsuarioComum(nome, cpf, senha, formaPagamento);
             }
 
-            mensagem.setStyle("-fx-text-fill: #16a34a;");
-            mensagem.setText("Conta criada com sucesso! Você já pode entrar.");
+            EstiloMensagem.sucesso(mensagem, "Conta criada com sucesso! Você já pode entrar.");
 
             campoNome.clear();
             campoCpf.clear();
@@ -93,7 +93,6 @@ public class CadastroUsuarioController {
     }
 
     private void erro(String texto) {
-        mensagem.setStyle("-fx-text-fill: #dc2626;");
-        mensagem.setText(texto);
+        EstiloMensagem.erro(mensagem, texto);
     }
 }

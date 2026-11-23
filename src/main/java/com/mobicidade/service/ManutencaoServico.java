@@ -90,6 +90,9 @@ public class ManutencaoServico extends ServicoInteiroBase<Manutencao> implements
         exigir(!estacao.estaBloqueada(),
                 "Não é possível reintegrar o veículo em uma estação bloqueada.");
 
+        exigir(!estacao.ehZonaLivre(),
+                "A estação Zona Livre não pode receber veículos diretamente após manutenção.");
+
         exigir(estacao.temVaga(),
                 "A estação " + idEstacao + " não possui vagas livres para reintegrar o veículo.");
 
