@@ -54,27 +54,3 @@ JavaFX, Open-Meteo API (https://open-meteo.com, pública e sem chave), `java.net
 * Heric Costa do Nascimento - [heric.costa@ufrpe.br](mailto:heric.costa@ufrpe.br)
 * Kelvis Kauan de Souza Gomes - [kelvis.kauan@ufrpe.br](mailto:kelvis.kauan@ufrpe.br)
 * Eduarda Menezes Guilherme - [eduarda.guilherme@ufrpe.br](mailto:eduarda.guilherme@ufrpe.br)
-
-## Validações adicionais e segurança
-
-- Os nomes das estações são únicos, sem distinção entre maiúsculas e minúsculas. O nome "Zona Livre" é reservado à estação especial do sistema.
-- A estação Zona Livre possui coordenadas válidas de Recife, recebe veículos devolvidos nessa modalidade e permite que eles sejam alugados novamente. O cadastro direto de veículos nela não é permitido.
-- Estações bloqueadas não podem receber devoluções, recolhimentos ou novos veículos.
-- Estações e veículos vinculados ao histórico de corridas não podem ser removidos, preservando a integridade dos relatórios.
-- A previsão climática em cache é armazenada por coordenada. Uma previsão de uma estação não é reutilizada para outra localização.
-- Novos cadastros verificam os dígitos verificadores do CPF.
-- As senhas são armazenadas com hash PBKDF2-HMAC-SHA256 e salt individual; a autenticação verifica a senha informada sem armazená-la em texto puro.
-- Administradores não podem iniciar corridas como usuários comuns, e o sistema impede a remoção do último administrador cadastrado.
-
-
-## Executar os testes de regras de negócio
-
-O projeto inclui uma suíte manual de verificações em `tests/TesteCorrigido.java`. Depois de compilar o projeto com Java 25 e Maven, execute no PowerShell:
-
-```powershell
-mvn clean compile
-javac -encoding UTF-8 -cp target/classes -d target/test-classes tests/TesteCorrigido.java
-java -cp "target/classes;target/test-classes" TesteCorrigido
-```
-
-A suíte verifica os fluxos principais da fachada, serviços, repositórios, validações, cache climático e segurança. Ela não substitui testes automatizados de interface JavaFX.
